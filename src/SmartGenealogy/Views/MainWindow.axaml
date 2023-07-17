@@ -1,15 +1,13 @@
 <Window x:Class="SmartGenealogy.Views.MainWindow"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:SmartGenealogy.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:SmartGenealogy.Views"
+        xmlns:vm="using:SmartGenealogy.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:CompileBindings="True" x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="SmartGenealogy"
-        Width="{Binding WindowWidth}" Height="{Binding WindowHeight}"
-        WindowState="{Binding WindowState}">
+        Title="SmartGenealogy">
   <views:MainView />
 </Window>

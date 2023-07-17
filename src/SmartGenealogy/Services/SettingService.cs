@@ -3,6 +3,8 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+using CommunityToolkit.Mvvm.DependencyInjection;
+
 using Serilog;
 
 using SmartGenealogy.Contracts;
@@ -10,19 +12,26 @@ using SmartGenealogy.Models;
 
 namespace SmartGenealogy.Services;
 
+/// <summary>
+/// Settings service.
+/// </summary>
 public class SettingService : ISettingService
 {
     private readonly ILogger _logger;
 
-    public SettingService(ILogger logger)
+    /// <summary>
+    /// Ctor
+    /// </summary>
+    public SettingService()
     {
-        //_logger = Ioc.Default.GetService<ILogger>()!;
-        _logger = logger;
+        _logger = Ioc.Default.GetService<ILogger>()!;
         LoadSavedSetting().Wait();
     }
 
+    /// <inheritdoc/>
     public Settings Settings { get; private set; }
 
+    /// <inheritdoc/>
     public async Task InitializeSettings()
     {
         _logger.Information("Initializing settings...");
@@ -54,6 +63,10 @@ public class SettingService : ISettingService
         }
     }
 
+    /// <summary>
+    /// Loads data from the saved settings file.
+    /// </summary>
+    /// <returns>Settings</returns>
     private async Task LoadSavedSetting()
     {
         if (!File.Exists("Settings.json"))
