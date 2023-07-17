@@ -2,8 +2,6 @@
 using System.IO;
 using System.Text.Json;
 
-using CommunityToolkit.Mvvm.DependencyInjection;
-
 using Serilog;
 
 using SmartGenealogy.Contracts;
@@ -15,18 +13,22 @@ namespace SmartGenealogy.ViewModels;
 /// </summary>
 public partial class MainViewModel : ViewModelBase
 {
-    private readonly ILogger _logger;
-    private readonly ISettingService _settingService;
+    private readonly ILogger? _logger;
+    private readonly ISettingService? _settingService;
+
+    public MainViewModel() : this(null, null)
+    {
+    }
 
     /// <summary>
     /// Ctor
     /// </summary>
-    public MainViewModel()
+    public MainViewModel(ILogger? logger, ISettingService? settingService)
     {
-        _logger = Ioc.Default.GetService<ILogger>()!;
-        _settingService = Ioc.Default.GetService<ISettingService>()!;
+        _logger = logger; //Ioc.Default.GetService<ILogger>()!;
+        _settingService = settingService; //Ioc.Default.GetService<ISettingService>()!;
 
-        _logger.Information("Main Window initialized");
+        _logger?.Information("Main Window initialized");
         AppDomain.CurrentDomain.ProcessExit += OnExit!;
     }
 
@@ -37,6 +39,6 @@ public partial class MainViewModel : ViewModelBase
     {
         var json = JsonSerializer.Serialize(_settingService.Settings, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText("Settings.json", json);
-        _logger.Information("Settings saved");
+        _logger?.Information("Settings saved");
     }
 }

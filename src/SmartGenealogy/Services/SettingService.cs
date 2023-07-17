@@ -3,8 +3,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using CommunityToolkit.Mvvm.DependencyInjection;
-
 using Serilog;
 
 using SmartGenealogy.Contracts;
@@ -22,9 +20,9 @@ public class SettingService : ISettingService
     /// <summary>
     /// Ctor
     /// </summary>
-    public SettingService()
+    public SettingService(ILogger logger)
     {
-        _logger = Ioc.Default.GetService<ILogger>()!;
+        _logger = logger; //Ioc.Default.GetService<ILogger>()!;
         LoadSavedSetting().Wait();
     }
 
