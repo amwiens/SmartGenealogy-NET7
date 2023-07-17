@@ -2,8 +2,11 @@
 
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Chrome;
 
 using CommunityToolkit.Mvvm.DependencyInjection;
+
+using FluentAvalonia.UI.Windowing;
 
 using SmartGenealogy.Contracts;
 
@@ -12,7 +15,7 @@ namespace SmartGenealogy.Views;
 /// <summary>
 /// Main window.
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : AppWindow
 {
     private readonly ISettingService _settingService;
 
@@ -23,6 +26,9 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         _settingService = Ioc.Default.GetService<ISettingService>()!;
+        TitleBar.ExtendsContentIntoTitleBar = true;
+        TitleBar.TitleBarHitTestType = TitleBarHitTestType.Complex;
+
         SetupWindow().Wait();
 
         this.Closing += (sender, e) => SaveWindowSizeAndPosition();
