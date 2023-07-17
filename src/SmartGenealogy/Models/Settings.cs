@@ -38,5 +38,5 @@ public class Settings
         return (Settings)MemberwiseClone();
     }
 
-    #endregion
+    #endregion Clone
 }
