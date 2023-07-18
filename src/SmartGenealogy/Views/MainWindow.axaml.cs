@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Chrome;
 
 using CommunityToolkit.Mvvm.DependencyInjection;
 
@@ -32,6 +32,7 @@ public partial class MainWindow : AppWindow
         SetupWindow().Wait();
 
         this.Closing += (sender, e) => SaveWindowSizeAndPosition();
+        Application.Current!.ActualThemeVariantChanged += OnActualThemeVariantChanged;
     }
 
     /// <summary>
@@ -58,5 +59,14 @@ public partial class MainWindow : AppWindow
         _settingService.Settings.Height = this.Height;
         _settingService.Settings.X = this.Position.X;
         _settingService.Settings.Y = this.Position.Y;
+    }
+
+    private void OnActualThemeVariantChanged(object? sender, EventArgs e)
+    {
+        if (IsWindows11)
+        {
+            ClearValue(BackgroundProperty);
+            ClearValue(TransparencyBackgroundFallbackProperty);
+        }
     }
 }

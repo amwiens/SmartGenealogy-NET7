@@ -48,7 +48,7 @@
         <AutoCompleteBox Name="SearchBox"
                          MaxWidth="500"
                          Watermark="Search"
-                         Classes="SampleApp"
+                         Classes="SmartGenealogy"
                          >
           <AutoCompleteBox.ItemTemplate>
             <DataTemplate x:DataType="models:MainAppSearchItem">
@@ -71,7 +71,26 @@
     <ui:NavigationView AlwaysShowHeader="False"
                        PaneDisplayMode="Left"
                        Grid.RowSpan="2"
-                       IsSettingsVisible="False" />
+                       IsSettingsVisible="False"
+                       MenuItemsSource="{Binding NavigationItems}"
+                       SelectedItem="{Binding SelectedNavigationItem}"
+                       FooterMenuItemsSource="{Binding FooterItems}">
+      <Interaction.Behaviors>
+        <ValueChangedTriggerBehavior Binding="{Binding SelectedNavigationItem}">
+          <InvokeCommandAction Command="{Binding SwitchTabCommand, Mode=OneWay}" />
+        </ValueChangedTriggerBehavior>
+      </Interaction.Behaviors>
+
+      <ui:NavigationView.MenuItemTemplate>
+        <DataTemplate DataType="{x:Type models:NavigationItem}">
+          <ui:NavigationViewItem Content="{Binding DisplayName}" IconSource="{Binding Icon}" ToolTip.Tip="{Binding DisplayName}" />
+        </DataTemplate>
+      </ui:NavigationView.MenuItemTemplate>
+
+      <ui:NavigationView.Content>
+        <UserControl Content="{Binding CurrentPage}" />
+      </ui:NavigationView.Content>
+    </ui:NavigationView>
   </Grid>
 
 </UserControl>

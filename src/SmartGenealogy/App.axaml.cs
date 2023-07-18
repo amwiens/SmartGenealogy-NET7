@@ -12,6 +12,18 @@ using Serilog;
 using SmartGenealogy.Contracts;
 using SmartGenealogy.Services;
 using SmartGenealogy.ViewModels;
+using SmartGenealogy.ViewModels.Addresses;
+using SmartGenealogy.ViewModels.File;
+using SmartGenealogy.ViewModels.Home;
+using SmartGenealogy.ViewModels.Media;
+using SmartGenealogy.ViewModels.People;
+using SmartGenealogy.ViewModels.Places;
+using SmartGenealogy.ViewModels.Publish;
+using SmartGenealogy.ViewModels.Search;
+using SmartGenealogy.ViewModels.Settings;
+using SmartGenealogy.ViewModels.Sources;
+using SmartGenealogy.ViewModels.Tasks;
+using SmartGenealogy.ViewModels.Tools;
 using SmartGenealogy.Views;
 
 namespace SmartGenealogy;
@@ -38,7 +50,7 @@ public partial class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = Ioc.Default.GetRequiredService<MainViewModel>() //new MainViewModel()
+                DataContext = Ioc.Default.GetRequiredService<MainViewModel>()
             };
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
@@ -61,6 +73,18 @@ public partial class App : Application
                 .AddSingleton(Log.Logger)
                 // ViewModels
                 .AddTransient<MainViewModel>()
+                .AddTransient<HomeViewModel>()
+                .AddTransient<MainFileViewModel>()
+                .AddTransient<MainPeopleViewModel>()
+                .AddTransient<MainPlacesViewModel>()
+                .AddTransient<MainSourcesViewModel>()
+                .AddTransient<MainMediaViewModel>()
+                .AddTransient<MainTasksViewModel>()
+                .AddTransient<MainAddressesViewModel>()
+                .AddTransient<MainSearchViewModel>()
+                .AddTransient<MainPublishViewModel>()
+                .AddTransient<MainToolsViewModel>()
+                .AddTransient<MainSettingsViewModel>()
                 .BuildServiceProvider());
     }
 }

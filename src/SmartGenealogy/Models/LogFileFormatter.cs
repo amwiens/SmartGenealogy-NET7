@@ -18,7 +18,7 @@ public class LogFileFormatter : ITextFormatter
     /// <param name="output">Output string.</param>
     public void Format(LogEvent logEvent, TextWriter output)
     {
-        output.Write($"[{logEvent.Timestamp:HH:mm:ss.fff zzz}] [{logEvent.Level}]");
+        output.Write($"[{logEvent.Timestamp:HH:mm:ss.fff zzz}] [{logEvent.Level}] ");
         output.WriteLine(logEvent.MessageTemplate.Render(logEvent.Properties, CultureInfo.InvariantCulture));
         if (logEvent.Exception is not null)
         {
