@@ -1,0 +1,18 @@
+<UserControl x:Class="SmartGenealogy.Views.Places.MainPlacesView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:SmartGenealogy.ViewModels.Places"
+             xmlns:models="clr-namespace:SmartGenealogy.Models"
+             xmlns:controls="clr-namespace:SmartGenealogy.Controls"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:CompileBindings="True" x:DataType="vm:MainPlacesViewModel">
+
+  <ScrollViewer>
+    <StackPanel Spacing="-75">
+      <controls:PageHeaderControl TitleText="{Binding Title, Mode=OneWay}" Classes="smaller" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

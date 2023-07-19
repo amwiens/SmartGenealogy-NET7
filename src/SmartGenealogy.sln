@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.7.33906.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Solution Items", "1. Solution Items", "{21AF9C7C-E0E8-4FB8-ACF1-333609DF78BE}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+		..\Assets\SAMPLECODE.md = ..\Assets\SAMPLECODE.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Source", "2. Source", "{769065F5-C1DB-4CEB-8B27-4ED475D72FC3}"
 EndProject
