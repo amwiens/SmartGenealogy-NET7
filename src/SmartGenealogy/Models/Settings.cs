@@ -1,5 +1,8 @@
 ﻿namespace SmartGenealogy.Models;
 
+/// <summary>
+/// Application settings.
+/// </summary>
 public class Settings
 {
     #region Main window settings
@@ -31,8 +34,21 @@ public class Settings
 
     #endregion Main window settings
 
+    #region Application settings
+
+    /// <summary>
+    /// Last used file name.
+    /// </summary>
+    public string? FileName { get; set; }
+
+    #endregion Application settings
+
     #region Clone
 
+    /// <summary>
+    /// Clones the settings.
+    /// </summary>
+    /// <returns>Settings.</returns>
     public Settings Clone()
     {
         return (Settings)MemberwiseClone();

@@ -1,0 +1,49 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
+        xmlns:aedit="using:AvaloniaEdit"
+        xmlns:aedit2="using:AvaloniaEdit.Editing">
+
+  <Styles.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="/Resources/Styling/ControlThemes.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Styles.Resources>
+
+  <!--<StyleInclude Source="avares://AvaloniaEdit/Theme/Fluent/AvaloniaEdit.xaml" />-->
+
+  <!-- Set the selection color for the AvaloniaEdit boxes -->
+  <Style Selector="aedit2|TextArea">
+    <Setter Property="SelectionBrush" Value="{DynamicResource TextControlSelectionHighlightColor}" />
+    <Setter Property="SelectionForeground" Value="{DynamicResource TextOnAccentFillColorSelectedTextBrush}" />
+  </Style>
+
+
+  <!-- AutoCompleteBox Search box in MainView -->
+  <Style Selector="AutoCompleteBox.SmartGenealogy /template/ TextBox#PART_TextBox">
+    <Setter Property="InnerRightContent">
+      <Template>
+        <StackPanel Orientation="Horizontal">
+          <Button Content="&#xE8BB;"
+                  FontFamily="{StaticResource SymbolThemeFontFamily}"
+                  Theme="{StaticResource TransparentButton}"
+                  Command="{Binding $parent[TextBox].Clear}"
+                  IsVisible="{Binding Text, RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <Button Content="&#xE721;"
+                  FontFamily="{StaticResource SymbolThemeFontFamily}"
+                  Theme="{StaticResource TransparentButton}"
+                  Command="{Binding $parent[TextBox].Clear}"
+                  IsHitTestVisible="False" />
+        </StackPanel>
+      </Template>
+    </Setter>
+  </Style>
+
+  <!-- Adjust the ScrollViewer padding in AvaloniaEdit so scrollbar doesn't overlap text -->
+  <Style Selector="aedit|TextEditor /template/ ScrollViewer ScrollContentPresenter">
+    <Setter Property="Padding" Value="0 0 0 20" />
+  </Style>
+</Styles>

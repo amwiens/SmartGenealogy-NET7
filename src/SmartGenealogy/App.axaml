@@ -1,10 +1,24 @@
-<Application xmlns="https://github.com/avaloniaui"
+<Application x:Class="SmartGenealogy.App"
+             xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="SmartGenealogy.App"
+             xmlns:local="using:SmartGenealogy"
+             xmlns:sty="using:FluentAvalonia.Styling"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+  <Application.DataTemplates>
+    <local:ViewLocator />
+  </Application.DataTemplates>
 
-    <Application.Styles>
-        <FluentTheme />
-    </Application.Styles>
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://SmartGenealogy/Resources/Styling/Resources.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <sty:FluentAvaloniaTheme PreferSystemTheme="True" PreferUserAccentColor="True" />
+    <StyleInclude Source="avares://SmartGenealogy/Resources/Styling/SmartGenealogyStyles.axaml" />
+  </Application.Styles>
 </Application>

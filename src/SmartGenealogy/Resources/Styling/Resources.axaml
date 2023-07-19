@@ -1,0 +1,14 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+  <ui:SymbolIconSource x:Key="SaveIcon" Symbol="Save" />
+  <ui:FontIconSource x:Key="FontIcon" Glyph="F" />
+  <ui:PathIconSource x:Key="PathIcon" Data="M0,0 L 50,0 L 25,50Z" />
+  <ui:BitmapIconSource x:Key="BmpIcon" UriSource="avares://SmartGenealogy/Resources/Icons/avalonia-logo.ico" />
+
+  <!-- Override this so content doesn't appear in title bar area -->
+  <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
+
+  <Thickness x:Key="PageMargin">20 20 20 0</Thickness>
+</ResourceDictionary>
