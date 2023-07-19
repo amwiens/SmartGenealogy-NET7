@@ -34,6 +34,15 @@ public class Settings
 
     #endregion Main window settings
 
+    #region Application settings
+
+    /// <summary>
+    /// Last used file name.
+    /// </summary>
+    public string? FileName { get; set; }
+
+    #endregion Application settings
+
     #region Clone
 
     /// <summary>

@@ -114,16 +114,20 @@ public partial class MainViewModel : ViewModelBase
         {
             new((ViewModelBase)_homeViewModel!, "Home", "Home", Symbol.Home),
             new((ViewModelBase)_mainFileViewModel!, "File", "File", Symbol.Document),
-            new((ViewModelBase)_mainPeopleViewModel!, "People", "People", Symbol.People),
-            new((ViewModelBase)_mainPlacesViewModel!, "Places", "Places", Symbol.Earth),
-            new((ViewModelBase)_mainSourcesViewModel!, "Sources", "Sources", Symbol.Library),
-            new((ViewModelBase)_mainMediaViewModel!, "Media", "Media", Symbol.Image),
-            new((ViewModelBase)_mainTasksViewModel!, "Tasks", "Tasks", Symbol.ShowResults),
-            new((ViewModelBase)_mainAddressesViewModel!, "Addresses", "Addresses", Symbol.ContactInfo),
-            new((ViewModelBase)_mainSearchViewModel!, "Search", "Search", Symbol.Find),
-            new((ViewModelBase)_mainPublishViewModel!, "Publish", "Publish", Symbol.Print),
-            new((ViewModelBase)_mainToolsViewModel!, "Tools", "Tools", Symbol.Repair),
         };
+
+        if (!string.IsNullOrEmpty(_settingService?.Settings.FileName))
+        {
+            NavigationItems.Add(new((ViewModelBase)_mainPeopleViewModel!, "People", "People", Symbol.People));
+            NavigationItems.Add(new((ViewModelBase)_mainPlacesViewModel!, "Places", "Places", Symbol.Earth));
+            NavigationItems.Add(new((ViewModelBase)_mainSourcesViewModel!, "Sources", "Sources", Symbol.Library));
+            NavigationItems.Add(new((ViewModelBase)_mainMediaViewModel!, "Media", "Media", Symbol.Image));
+            NavigationItems.Add(new((ViewModelBase)_mainTasksViewModel!, "Tasks", "Tasks", Symbol.ShowResults));
+            NavigationItems.Add(new((ViewModelBase)_mainAddressesViewModel!, "Addresses", "Addresses", Symbol.ContactInfo));
+            NavigationItems.Add(new((ViewModelBase)_mainSearchViewModel!, "Search", "Search", Symbol.Find));
+            NavigationItems.Add(new((ViewModelBase)_mainPublishViewModel!, "Publish", "Publish", Symbol.Print));
+            NavigationItems.Add(new((ViewModelBase)_mainToolsViewModel!, "Tools", "Tools", Symbol.Repair));
+        }
 
         FooterItems.Clear();
         FooterItems = new ObservableCollection<NavigationItem>
