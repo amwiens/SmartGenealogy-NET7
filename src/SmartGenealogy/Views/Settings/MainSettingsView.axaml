@@ -61,12 +61,22 @@
         </DockPanel>
       </Grid>
 
-      <TabControl Name="SettingsTab">
-        <TabItem Header="Program"></TabItem>
-        <TabItem Header="Folder"></TabItem>
-        <TabItem Header="General"></TabItem>
-        <TabItem Header="Display"></TabItem>
-        <TabItem Header="Preparer"></TabItem>
+      <TabControl Name="SettingsTab"
+                  ItemsSource="{Binding TabItems}"
+                  SelectedItem="{Binding SelectedTab}">
+        <Interaction.Behaviors>
+          <ValueChangedTriggerBehavior Binding="{Binding SelectedTab}">
+            <InvokeCommandAction Command="{Binding SwitchTabCommand, Mode=OneWay}" />
+          </ValueChangedTriggerBehavior>
+        </Interaction.Behaviors>
+
+        <TabControl.ContentTemplate>
+          <DataTemplate DataType="{x:Type models:TabItem}">
+            <TabItem Header="{Binding DisplayName}">
+              <UserControl Content="{Binding ViewModel}" />
+            </TabItem>
+          </DataTemplate>
+        </TabControl.ContentTemplate>
       </TabControl>
     </StackPanel>
   </ScrollViewer>
