@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Styling;
 
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using FluentAvalonia.UI.Windowing;
 
 using SmartGenealogy.Contracts;
+using SmartGenealogy.Models;
 
 namespace SmartGenealogy.Views;
 
@@ -46,6 +48,12 @@ public partial class MainWindow : AppWindow
         this.Width = _settingService.Settings.Width;
         this.Height = _settingService.Settings.Height;
         this.WindowState = _settingService.Settings.IsMaximized ? WindowState.Maximized : WindowState.Normal;
+        Application.Current.RequestedThemeVariant = _settingService.Settings.CurrentTheme switch
+        {
+            "Dark" => ThemeVariant.Dark,
+            "Light" => ThemeVariant.Light,
+            _ => ThemeVariant.Default
+        };
     }
 
     /// <summary>

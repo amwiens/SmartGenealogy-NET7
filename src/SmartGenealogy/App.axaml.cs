@@ -86,6 +86,7 @@ public partial class App : Application
                 .AddTransient<MainPublishViewModel>()
                 .AddTransient<MainToolsViewModel>()
                 .AddTransient<MainSettingsViewModel>()
+                .AddTransient<DisplaySettingsViewModel>()
                 .BuildServiceProvider());
     }
 }

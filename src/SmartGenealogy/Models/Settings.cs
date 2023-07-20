@@ -43,6 +43,15 @@ public class Settings
 
     #endregion Application settings
 
+    #region Display settings
+
+    /// <summary>
+    /// Current application theme.
+    /// </summary>
+    public string? CurrentTheme { get; set; }
+
+    #endregion Display settings
+
     #region Clone
 
     /// <summary>

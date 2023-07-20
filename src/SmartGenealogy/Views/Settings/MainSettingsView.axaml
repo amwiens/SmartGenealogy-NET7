@@ -70,11 +70,14 @@
           </ValueChangedTriggerBehavior>
         </Interaction.Behaviors>
 
+        <TabControl.ItemTemplate>
+          <DataTemplate DataType="{x:Type models:TabItem}">
+            <TextBlock Text="{Binding DisplayName}" />
+          </DataTemplate>
+        </TabControl.ItemTemplate>
         <TabControl.ContentTemplate>
           <DataTemplate DataType="{x:Type models:TabItem}">
-            <TabItem Header="{Binding DisplayName}">
-              <UserControl Content="{Binding ViewModel}" />
-            </TabItem>
+            <UserControl Content="{Binding ViewModel}" />
           </DataTemplate>
         </TabControl.ContentTemplate>
       </TabControl>
