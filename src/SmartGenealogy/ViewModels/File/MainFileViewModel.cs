@@ -12,6 +12,7 @@ using Serilog;
 
 using SmartGenealogy.Contracts;
 using SmartGenealogy.Messages;
+using SmartGenealogy.Persistence.Extensions;
 using SmartGenealogy.ViewModels.Base;
 
 namespace SmartGenealogy.ViewModels.File;
@@ -71,7 +72,7 @@ public partial class MainFileViewModel : MainViewModelBase
     private async Task CreateFile()
     {
         _logger?.Information("Create file button clicked");
-        var result = await _messageBoxService?.CreateNotification("Open functionality coming soon.");
+        await _messageBoxService?.CreateNotification("Open functionality coming soon.")!;
     }
 
     /// <summary>
@@ -96,9 +97,21 @@ public partial class MainFileViewModel : MainViewModelBase
 
         var file = dialog[0].Path;
         _logger?.Information("User chose file {File}", file);
-        _settingService.Settings.FileName = file.ToString();
-        SetFileInformation();
-        WeakReferenceMessenger.Default.Send(new OpenFileChangedMessage(true));
+
+        if (file.ToString().IsSQLiteDatabase())
+        {
+            _logger?.Information("File is SQLite database.");
+            _settingService.Settings.FileName = file.ToString();
+            SetFileInformation();
+            WeakReferenceMessenger.Default.Send(new OpenFileChangedMessage(true));
+        }
+        else
+        {
+            var message = "File isn't a valid SQLite database.";
+            _logger?.Information(message);
+            await _messageBoxService?.CreateNotification(message)!;
+        }
+
     }
 
     /// <summary>
@@ -108,7 +121,7 @@ public partial class MainFileViewModel : MainViewModelBase
     private async Task RestoreFile()
     {
         _logger?.Information("Restore file button clicked");
-        var result = await _messageBoxService?.CreateNotification("Restore functionality coming soon.");
+        await _messageBoxService?.CreateNotification("Restore functionality coming soon.")!;
     }
 
     /// <summary>
@@ -118,7 +131,7 @@ public partial class MainFileViewModel : MainViewModelBase
     private async Task BackupFile()
     {
         _logger?.Information("Backup file button clicked");
-        var result = await _messageBoxService?.CreateNotification("Backup functionality coming soon.");
+        await _messageBoxService?.CreateNotification("Backup functionality coming soon.")!;
     }
 
     /// <summary>
@@ -128,7 +141,7 @@ public partial class MainFileViewModel : MainViewModelBase
     private async Task ImportData()
     {
         _logger?.Information("Import button clicked");
-        var result = await _messageBoxService?.CreateNotification("Import functionality coming soon.");
+        await _messageBoxService?.CreateNotification("Import functionality coming soon.")!;
     }
 
     /// <summary>
@@ -138,7 +151,7 @@ public partial class MainFileViewModel : MainViewModelBase
     private async Task ExportData()
     {
         _logger?.Information("Export data button clicked");
-        var result = await _messageBoxService?.CreateNotification("Export functionality coming soon.");
+        await _messageBoxService?.CreateNotification("Export functionality coming soon.")!;
     }
 
     /// <summary>
@@ -148,7 +161,7 @@ public partial class MainFileViewModel : MainViewModelBase
     private async Task Tools()
     {
         _logger?.Information("Tools button clicked");
-        var result = await _messageBoxService?.CreateNotification("Tools functionality coming soon.");
+        await _messageBoxService?.CreateNotification("Tools functionality coming soon.")!;
     }
 
     /// <summary>
