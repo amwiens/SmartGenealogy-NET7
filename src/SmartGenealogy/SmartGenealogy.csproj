@@ -5,6 +5,8 @@
     <LangVersion>latest</LangVersion>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <OutputType>WinExe</OutputType>
+    <PackageIcon>SGIcon_128.png</PackageIcon>
+    <ApplicationIcon>Resources\Icons\SGIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaXaml Remove="Assets\**" />
@@ -23,6 +25,11 @@
     <AvaloniaResource Include="Resources\Icons\SGIcon.ico" />
     <AvaloniaResource Include="Resources\Images\SGHeaderBackground.png" />
     <AvaloniaResource Include="Resources\Images\SGHeaderBackground_Dark.png" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
+    <Content Include="Resources\Icons\SGIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,5 +73,12 @@
     <Compile Update="Views\Tasks\MainTasksView.axaml.cs">
       <DependentUpon>MainTasksView.axaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Icons\SGIcon_128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 </Project>
