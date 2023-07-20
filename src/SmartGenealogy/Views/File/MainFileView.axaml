@@ -9,10 +9,81 @@
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True" x:DataType="vm:MainFileViewModel">
+  <Design.DataContext>
+    <vm:MainFileViewModel>
+      <vm:MainFileViewModel.Title>File</vm:MainFileViewModel.Title>
+      <vm:MainFileViewModel.CurrentFile>Current File: SmartGenealogy.sfdb</vm:MainFileViewModel.CurrentFile>
+      <vm:MainFileViewModel.IsFileOpen>True</vm:MainFileViewModel.IsFileOpen>
+    </vm:MainFileViewModel>
+  </Design.DataContext>
 
   <ScrollViewer>
     <StackPanel Spacing="-75">
-      <controls:PageHeaderControl TitleText="{Binding Title, Mode=OneWay}" Classes="smaller" />
+      <controls:PageHeaderControl TitleText="{Binding Title, Mode=OneWay}"
+                                  Classes="smaller" />
+
+      <StackPanel Spacing="4"
+                  Margin="30 0">
+        <ui:SettingsExpander Header="Create File"
+                             Description="Create a new Smart Genealogy file"
+                             Command="{Binding CreateFileCommand}"
+                             IsClickEnabled="True"
+                             ClipToBounds="False"
+                             IconSource="Document" />
+        <ui:SettingsExpander Header="Open File"
+                             Description="Open an existing Smart Genealogy file"
+                             Command="{Binding OpenFileCommand}"
+                             IsClickEnabled="True"
+                             ClipToBounds="False"
+                             IconSource="OpenFolder" />
+        <ui:SettingsExpander Header="Restore File"
+                             Description="Restore a backup of a Smart Genealogy file"
+                             Command="{Binding RestoreFileCommand}"
+                             IsClickEnabled="True"
+                             ClipToBounds="False"
+                             IconSource="Restore" />
+
+        <TextBlock Text="{Binding CurrentFile}"
+                   Theme="{StaticResource SubtitleTextBlockStyle}"
+                   Margin="0 25 0 0"
+                   IsVisible="{Binding IsFileOpen}" />
+
+        <ui:SettingsExpander Header="Backup File"
+                             Description="Backup the current Smart Genealogy file"
+                             Command="{Binding BackupFileCommand}"
+                             IsClickEnabled="True"
+                             ClipToBounds="False"
+                             IsVisible="{Binding IsFileOpen}"
+                             IconSource="ZipFolder" />
+        <ui:SettingsExpander Header="Import data"
+                             Description="Import data into the current Smart Genealogy file"
+                             Command="{Binding ImportDataCommand}"
+                             IsClickEnabled="True"
+                             ClipToBounds="False"
+                             IsVisible="{Binding IsFileOpen}"
+                             IconSource="Download" />
+        <ui:SettingsExpander Header="Export data"
+                             Description="Export data from the current Smart Genealogy file"
+                             Command="{Binding ExportDataCommand}"
+                             IsClickEnabled="True"
+                             ClipToBounds="False"
+                             IsVisible="{Binding IsFileOpen}"
+                             IconSource="Upload" />
+        <ui:SettingsExpander Header="Tools"
+                             Description="Run tools on the current Smart Genealogy file"
+                             Command="{Binding ToolsCommand}"
+                             IsClickEnabled="True"
+                             ClipToBounds="False"
+                             IsVisible="{Binding IsFileOpen}"
+                             IconSource="Repair" />
+        <ui:SettingsExpander Header="Close File"
+                             Description="Close the open Smart Genealogy file"
+                             Command="{Binding CloseFileCommand}"
+                             IsClickEnabled="True"
+                             ClipToBounds="False"
+                             IsVisible="{Binding IsFileOpen}"
+                             IconSource="Dismiss" />
+      </StackPanel>
     </StackPanel>
   </ScrollViewer>
 </UserControl>

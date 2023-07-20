@@ -4,12 +4,14 @@ using System.Text.Json;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 using FluentAvalonia.UI.Controls;
 
 using Serilog;
 
 using SmartGenealogy.Contracts;
+using SmartGenealogy.Messages;
 using SmartGenealogy.Models;
 using SmartGenealogy.ViewModels.Addresses;
 using SmartGenealogy.ViewModels.File;
@@ -29,7 +31,7 @@ namespace SmartGenealogy.ViewModels;
 /// <summary>
 /// Main view model class.
 /// </summary>
-public partial class MainViewModel : ViewModelBase
+public partial class MainViewModel : ViewModelBase, IRecipient<OpenFileChangedMessage>
 {
     private readonly ILogger? _logger;
     private readonly ISettingService? _settingService;
@@ -46,6 +48,9 @@ public partial class MainViewModel : ViewModelBase
     private MainPublishViewModel? _mainPublishViewModel;
     private MainToolsViewModel? _mainToolsViewModel;
     private MainSettingsViewModel? _mainSettingsViewModel;
+
+    [ObservableProperty]
+    private string? _windowTitle = "Smart Genealogy";
 
     [ObservableProperty]
     private ViewModelBase? _currentPage;
@@ -100,9 +105,12 @@ public partial class MainViewModel : ViewModelBase
         _mainToolsViewModel = mainToolsViewModel;
         _mainSettingsViewModel = mainSettingsViewModel;
 
+        WeakReferenceMessenger.Default.Register<OpenFileChangedMessage>(this);
+
         SetupNavigation();
         SelectedNavigationItem = NavigationItems[0];
         SwitchTab();
+        SetWindowTitle();
         _logger?.Information("Main Window initialized");
         AppDomain.CurrentDomain.ProcessExit += OnExit!;
     }
@@ -155,5 +163,33 @@ public partial class MainViewModel : ViewModelBase
         var json = JsonSerializer.Serialize(_settingService?.Settings, new JsonSerializerOptions { WriteIndented = true });
         System.IO.File.WriteAllText("Settings.json", json);
         _logger?.Information("Settings saved");
+    }
+
+    /// <summary>
+    /// Receive open file changed messages.
+    /// </summary>
+    /// <param name="message"></param>
+    public void Receive(OpenFileChangedMessage message)
+    {
+        _logger?.Information("Open file changed message received: {Message}", message.Value);
+        SetupNavigation();
+        SetWindowTitle();
+        SelectedNavigationItem = NavigationItems[1];
+        SwitchTab();
+    }
+
+    /// <summary>
+    /// Set window title.
+    /// </summary>
+    private void SetWindowTitle()
+    {
+        if (!string.IsNullOrEmpty(_settingService?.Settings.FileName))
+        {
+            WindowTitle = $"Smart Genealogy - {_settingService?.Settings.FileName}";
+        }
+        else
+        {
+            WindowTitle = "Smart Genealogy";
+        }
     }
 }

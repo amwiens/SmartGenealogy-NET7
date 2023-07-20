@@ -70,6 +70,7 @@ public partial class App : Application
             new ServiceCollection()
                 // Services
                 .AddSingleton<ISettingService, SettingService>()
+                .AddSingleton<IMessageBoxService, MessageBoxService>()
                 .AddSingleton(Log.Logger)
                 // ViewModels
                 .AddTransient<MainViewModel>()

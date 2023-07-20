@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Solution Items", "1. Solution Items", "{21AF9C7C-E0E8-4FB8-ACF1-333609DF78BE}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
+		..\Assets\RESOURCES.md = ..\Assets\RESOURCES.md
 		..\Assets\SAMPLECODE.md = ..\Assets\SAMPLECODE.md
 	EndProjectSection
 EndProject
@@ -14,6 +15,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Z. Tests", "Z. Tests", "{33489F43-2DB9-4827-9C12-D1B15BDE45F5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartGenealogy", "SmartGenealogy\SmartGenealogy.csproj", "{E45AB5F0-7235-4C15-A09C-013915B3FD71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartGenealogy.Persistence", "SmartGenealogy.Persistence\SmartGenealogy.Persistence.csproj", "{52EBEBA7-990A-4F06-8934-1109AA7922B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,12 +28,17 @@ Global
 		{E45AB5F0-7235-4C15-A09C-013915B3FD71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E45AB5F0-7235-4C15-A09C-013915B3FD71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E45AB5F0-7235-4C15-A09C-013915B3FD71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52EBEBA7-990A-4F06-8934-1109AA7922B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52EBEBA7-990A-4F06-8934-1109AA7922B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52EBEBA7-990A-4F06-8934-1109AA7922B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52EBEBA7-990A-4F06-8934-1109AA7922B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E45AB5F0-7235-4C15-A09C-013915B3FD71} = {769065F5-C1DB-4CEB-8B27-4ED475D72FC3}
+		{52EBEBA7-990A-4F06-8934-1109AA7922B5} = {769065F5-C1DB-4CEB-8B27-4ED475D72FC3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4D58476-B9DB-4E7C-8DA5-84B6B95443BE}
