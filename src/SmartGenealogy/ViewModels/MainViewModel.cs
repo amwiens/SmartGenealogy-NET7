@@ -174,6 +174,8 @@ public partial class MainViewModel : ViewModelBase, IRecipient<OpenFileChangedMe
         _logger?.Information("Open file changed message received: {Message}", message.Value);
         SetupNavigation();
         SetWindowTitle();
+        SelectedNavigationItem = NavigationItems[1];
+        SwitchTab();
     }
 
     /// <summary>

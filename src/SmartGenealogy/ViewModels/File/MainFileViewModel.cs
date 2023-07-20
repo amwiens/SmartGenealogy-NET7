@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
@@ -22,6 +23,7 @@ public partial class MainFileViewModel : MainViewModelBase
 {
     private readonly ILogger? _logger;
     private readonly ISettingService? _settingService;
+    private readonly IMessageBoxService? _messageBoxService;
 
     [ObservableProperty]
     private bool _isFileOpen;
@@ -32,7 +34,7 @@ public partial class MainFileViewModel : MainViewModelBase
     /// <summary>
     /// Ctor
     /// </summary>
-    public MainFileViewModel() : this(null, null)
+    public MainFileViewModel() : this(null, null, null)
     {
     }
 
@@ -40,14 +42,17 @@ public partial class MainFileViewModel : MainViewModelBase
     /// Ctor
     /// </summary>
     public MainFileViewModel(ILogger? logger,
-        ISettingService? settingService)
+        ISettingService? settingService,
+        IMessageBoxService? messageBoxService)
     {
         _logger = logger;
         _settingService = settingService;
+        _messageBoxService = messageBoxService;
 
         Title = "File";
         SetFileInformation();
         _logger?.Information("File Window initialized");
+        _messageBoxService = messageBoxService;
     }
 
     /// <summary>
@@ -63,9 +68,10 @@ public partial class MainFileViewModel : MainViewModelBase
     /// Create a new file.
     /// </summary>
     [RelayCommand]
-    private void CreateFile()
+    private async Task CreateFile()
     {
         _logger?.Information("Create file button clicked");
+        var result = await _messageBoxService?.CreateNotification("Open functionality coming soon.");
     }
 
     /// <summary>
@@ -93,6 +99,56 @@ public partial class MainFileViewModel : MainViewModelBase
         _settingService.Settings.FileName = file.ToString();
         SetFileInformation();
         WeakReferenceMessenger.Default.Send(new OpenFileChangedMessage(true));
+    }
+
+    /// <summary>
+    /// Restore an existing file.
+    /// </summary>
+    [RelayCommand]
+    private async Task RestoreFile()
+    {
+        _logger?.Information("Restore file button clicked");
+        var result = await _messageBoxService?.CreateNotification("Restore functionality coming soon.");
+    }
+
+    /// <summary>
+    /// Backup an existing file.
+    /// </summary>
+    [RelayCommand]
+    private async Task BackupFile()
+    {
+        _logger?.Information("Backup file button clicked");
+        var result = await _messageBoxService?.CreateNotification("Backup functionality coming soon.");
+    }
+
+    /// <summary>
+    /// Import data.
+    /// </summary>
+    [RelayCommand]
+    private async Task ImportData()
+    {
+        _logger?.Information("Import button clicked");
+        var result = await _messageBoxService?.CreateNotification("Import functionality coming soon.");
+    }
+
+    /// <summary>
+    /// Export data.
+    /// </summary>
+    [RelayCommand]
+    private async Task ExportData()
+    {
+        _logger?.Information("Export data button clicked");
+        var result = await _messageBoxService?.CreateNotification("Export functionality coming soon.");
+    }
+
+    /// <summary>
+    /// File tools.
+    /// </summary>
+    [RelayCommand]
+    private async Task Tools()
+    {
+        _logger?.Information("Tools button clicked");
+        var result = await _messageBoxService?.CreateNotification("Tools functionality coming soon.");
     }
 
     /// <summary>
