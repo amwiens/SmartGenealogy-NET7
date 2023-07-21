@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 using SmartGenealogy.Contracts;
+using SmartGenealogy.Persistence;
 using SmartGenealogy.Services;
 using SmartGenealogy.ViewModels;
 using SmartGenealogy.ViewModels.Addresses;
@@ -68,6 +69,7 @@ public partial class App : Application
     {
         Ioc.Default.ConfigureServices(
             new ServiceCollection()
+                .AddDbContext<SmartGenealogyContext>()
                 // Services
                 .AddSingleton<ISettingService, SettingService>()
                 .AddSingleton<IMessageBoxService, MessageBoxService>()
