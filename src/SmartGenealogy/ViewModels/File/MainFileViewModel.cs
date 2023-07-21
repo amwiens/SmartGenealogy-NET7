@@ -101,7 +101,7 @@ public partial class MainFileViewModel : MainViewModelBase
         if (file.ToString().IsSQLiteDatabase())
         {
             _logger?.Information("File is SQLite database.");
-            _settingService.Settings.FileName = file.ToString();
+            _settingService!.Settings.FileName = file.ToString();
             SetFileInformation();
             WeakReferenceMessenger.Default.Send(new OpenFileChangedMessage(true));
         }
@@ -171,8 +171,8 @@ public partial class MainFileViewModel : MainViewModelBase
     [RelayCommand]
     private void CloseFile()
     {
-        _logger.Information("Close file button clicked");
-        _settingService.Settings.FileName = null;
+        _logger?.Information("Close file button clicked");
+        _settingService!.Settings.FileName = null;
         SetFileInformation();
         WeakReferenceMessenger.Default.Send(new OpenFileChangedMessage(false));
     }

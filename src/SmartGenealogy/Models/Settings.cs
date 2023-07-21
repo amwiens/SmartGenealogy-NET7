@@ -1,4 +1,6 @@
-﻿namespace SmartGenealogy.Models;
+﻿using Avalonia.Media;
+
+namespace SmartGenealogy.Models;
 
 /// <summary>
 /// Application settings.
@@ -49,6 +51,19 @@ public class Settings
     /// Current application theme.
     /// </summary>
     public string? CurrentTheme { get; set; }
+
+    /// <summary>
+    /// Current application accent color.
+    /// </summary>
+    public byte AppAccentColorA { get; set; }
+    public byte AppAccentColorR { get; set; }
+    public byte AppAccentColorG { get; set; }
+    public byte AppAccentColorB { get; set; }
+
+    /// <summary>
+    /// Use custom accent color.
+    /// </summary>
+    public bool UseCustomAccentColor { get; set; }
 
     #endregion Display settings
 
