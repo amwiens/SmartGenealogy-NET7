@@ -7,20 +7,18 @@ using CommunityToolkit.Mvvm.Input;
 
 using Serilog;
 
-using SmartGenealogy.Contracts;
 using SmartGenealogy.Models;
-using SmartGenealogy.ViewModels.Home;
-using SmartGenealogy.ViewModels.Search;
 
 namespace SmartGenealogy.ViewModels.Settings;
 
+/// <summary>
+/// Main settings view model
+/// </summary>
 public partial class MainSettingsViewModel : ViewModelBase
 {
     private readonly ILogger? _logger;
-    private readonly ISettingService? _settingService;
 
-    private readonly HomeViewModel? _homeViewModel;
-    private readonly MainSearchViewModel? _mainSearchViewModel;
+    private readonly DisplaySettingsViewModel? _displaySettingsViewModel;
 
     [ObservableProperty]
     private string _currentVersion = typeof(Controls.PageHeaderControl).Assembly.GetName().Version?.ToString()!;
@@ -40,7 +38,7 @@ public partial class MainSettingsViewModel : ViewModelBase
     /// <summary>
     /// Ctor
     /// </summary>
-    public MainSettingsViewModel() : this(null, null, null, null)
+    public MainSettingsViewModel() : this(null, null)
     {
     }
 
@@ -48,21 +46,17 @@ public partial class MainSettingsViewModel : ViewModelBase
     /// Ctor
     /// </summary>
     public MainSettingsViewModel(ILogger? logger,
-        ISettingService? settingService,
-        HomeViewModel? homeViewModel,
-        MainSearchViewModel? mainSearchViewModel)
+        DisplaySettingsViewModel? displaySettingsViewModel)
     {
         _logger = logger;
-        _settingService = settingService;
 
-        _homeViewModel = homeViewModel;
-        _mainSearchViewModel = mainSearchViewModel;
+        _displaySettingsViewModel = displaySettingsViewModel;
 
         SetupTabs();
         SelectedTab = TabItems[0];
         SwitchTab();
 
-        _logger?.Information("Settings view initialized");
+        _logger?.Information("Main settings view initialized");
     }
 
     /// <summary>
@@ -73,8 +67,7 @@ public partial class MainSettingsViewModel : ViewModelBase
         TabItems.Clear();
         TabItems = new ObservableCollection<TabItem>()
         {
-            new((ViewModelBase)_homeViewModel!, "Home", "Home"),
-            new((ViewModelBase)_mainSearchViewModel!, "Search", "Search"),
+            new((ViewModelBase)_displaySettingsViewModel!, "Display", "Display"),
         };
     }
 
