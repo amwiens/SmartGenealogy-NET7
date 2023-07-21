@@ -11,6 +11,7 @@ using Serilog;
 
 using SmartGenealogy.Contracts;
 using SmartGenealogy.Persistence;
+using SmartGenealogy.Persistence.Models;
 using SmartGenealogy.Services;
 using SmartGenealogy.ViewModels;
 using SmartGenealogy.ViewModels.Addresses;
@@ -74,6 +75,8 @@ public partial class App : Application
                 .AddSingleton<ISettingService, SettingService>()
                 .AddSingleton<IMessageBoxService, MessageBoxService>()
                 .AddSingleton(Log.Logger)
+                // Repositories
+                .AddScoped<IDataRepository<Place>, PlaceRepository>()
                 // ViewModels
                 .AddTransient<MainViewModel>()
                 .AddTransient<HomeViewModel>()

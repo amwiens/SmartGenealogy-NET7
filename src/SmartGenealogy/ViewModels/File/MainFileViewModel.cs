@@ -12,6 +12,7 @@ using Serilog;
 
 using SmartGenealogy.Contracts;
 using SmartGenealogy.Messages;
+using SmartGenealogy.Persistence;
 using SmartGenealogy.Persistence.Extensions;
 using SmartGenealogy.ViewModels.Base;
 
@@ -25,6 +26,7 @@ public partial class MainFileViewModel : MainViewModelBase
     private readonly ILogger? _logger;
     private readonly ISettingService? _settingService;
     private readonly IMessageBoxService? _messageBoxService;
+    private readonly SmartGenealogyContext? _context;
 
     [ObservableProperty]
     private bool _isFileOpen;
@@ -35,7 +37,7 @@ public partial class MainFileViewModel : MainViewModelBase
     /// <summary>
     /// Ctor
     /// </summary>
-    public MainFileViewModel() : this(null, null, null)
+    public MainFileViewModel() : this(null, null, null, null)
     {
     }
 
@@ -44,11 +46,13 @@ public partial class MainFileViewModel : MainViewModelBase
     /// </summary>
     public MainFileViewModel(ILogger? logger,
         ISettingService? settingService,
-        IMessageBoxService? messageBoxService)
+        IMessageBoxService? messageBoxService,
+        SmartGenealogyContext? context)
     {
         _logger = logger;
         _settingService = settingService;
         _messageBoxService = messageBoxService;
+        _context = context;
 
         Title = "File";
         SetFileInformation();
@@ -62,6 +66,7 @@ public partial class MainFileViewModel : MainViewModelBase
     private void SetFileInformation()
     {
         CurrentFile = $"Current File: {_settingService?.Settings.FileName}";
+        _context.DatabasePath = _settingService?.Settings.FileName!;
         IsFileOpen = !string.IsNullOrEmpty(_settingService?.Settings.FileName);
     }
 
@@ -95,7 +100,7 @@ public partial class MainFileViewModel : MainViewModelBase
             return;
         }
 
-        var file = dialog[0].Path;
+        var file = dialog[0].Path.AbsolutePath;
         _logger?.Information("User chose file {File}", file);
 
         if (file.ToString().IsSQLiteDatabase())
