@@ -18,7 +18,7 @@
     <Grid Name="TitleBarHost"
           ColumnDefinitions="Auto,Auto,*,Auto"
           Background="Transparent">
-      <Image Margin="12 4"
+      <Image Margin="48 4 12 4"
              IsHitTestVisible="False"
              Source="/Resources/Icons/SGIcon.ico"
              Width="18" Height="18"
