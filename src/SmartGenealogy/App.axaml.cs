@@ -1,9 +1,13 @@
-﻿using Avalonia;
+﻿using System;
+
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 
 using CommunityToolkit.Mvvm.DependencyInjection;
+
+using FluentAvalonia.UI.Controls;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -74,7 +78,11 @@ public partial class App : Application
                 // Services
                 .AddSingleton<ISettingService, SettingService>()
                 .AddSingleton<IMessageBoxService, MessageBoxService>()
+                .AddSingleton<INavigationService, NavigationService>()
+                .AddSingleton<INavigationPageFactory, NavigationFactory>()
                 .AddSingleton(Log.Logger)
+                .AddSingleton<Func<Type, ViewModelBase>>(serviceProvider =>
+                    viewModelType => (ViewModelBase)serviceProvider.GetRequiredService(viewModelType))
                 // Repositories
                 .AddScoped<IDataRepository<Place>, PlaceRepository>()
                 // ViewModels
@@ -83,6 +91,8 @@ public partial class App : Application
                 .AddTransient<MainFileViewModel>()
                 .AddTransient<MainPeopleViewModel>()
                 .AddTransient<MainPlacesViewModel>()
+                .AddTransient<PlacesViewModel>()
+                .AddTransient<PlaceViewModel>()
                 .AddTransient<MainSourcesViewModel>()
                 .AddTransient<MainMediaViewModel>()
                 .AddTransient<MainTasksViewModel>()

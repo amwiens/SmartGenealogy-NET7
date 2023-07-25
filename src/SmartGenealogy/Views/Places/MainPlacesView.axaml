@@ -7,12 +7,29 @@
              xmlns:models="clr-namespace:SmartGenealogy.Models"
              xmlns:controls="clr-namespace:SmartGenealogy.Controls"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:views="clr-namespace:SmartGenealogy.Views.Places"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True" x:DataType="vm:MainPlacesViewModel">
+  <Design.DataContext>
+    <vm:MainPlacesViewModel>
+      <vm:MainPlacesViewModel.Title>Places</vm:MainPlacesViewModel.Title>
+    </vm:MainPlacesViewModel>
+  </Design.DataContext>
 
   <ScrollViewer>
     <StackPanel Spacing="-75">
       <controls:PageHeaderControl TitleText="{Binding Title, Mode=OneWay}" Classes="smaller" />
+
+      <Button Theme="{StaticResource TransparentButton}"
+              Margin="8"
+              HorizontalAlignment="Left"
+              IsVisible="{Binding NavigationService.CanGoBack}">
+        <ui:SymbolIcon Symbol="Back" FontSize="18" />
+      </Button>
+      <ui:Frame Name="FrameView"
+                NavigationPageFactory="{Binding NavigationService.NavigationPageFactory}"
+                Content="{Binding NavigationService.CurrentView}"
+                CanGoBack="{Binding NavigationService.CanGoBack, Mode=OneWayToSource}" />
     </StackPanel>
   </ScrollViewer>
 </UserControl>

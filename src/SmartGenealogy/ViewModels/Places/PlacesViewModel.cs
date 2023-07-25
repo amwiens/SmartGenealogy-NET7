@@ -1,19 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-using FluentAvalonia.UI.Controls;
-
 using Serilog;
 
 using SmartGenealogy.Contracts;
-using SmartGenealogy.ViewModels.Base;
 
 namespace SmartGenealogy.ViewModels.Places;
 
-/// <summary>
-/// Main places view model.
-/// </summary>
-public partial class MainPlacesViewModel : MainViewModelBase
+public partial class PlacesViewModel : ViewModelBase
 {
     private readonly ILogger? _logger;
     private readonly ISettingService? _settingService;
@@ -27,12 +21,12 @@ public partial class MainPlacesViewModel : MainViewModelBase
     /// <summary>
     /// Ctor
     /// </summary>
-    public MainPlacesViewModel() : this(null, null, null) { }
+    public PlacesViewModel() : this(null, null, null) { }
 
     /// <summary>
     /// Ctor
     /// </summary>
-    public MainPlacesViewModel(ILogger? logger,
+    public PlacesViewModel(ILogger? logger,
         ISettingService? settingService,
         INavigationService? navigationService)
     {
@@ -40,16 +34,12 @@ public partial class MainPlacesViewModel : MainViewModelBase
         _settingService = settingService;
         _navigationService = navigationService;
 
-        //NavigationService?.Frame =
-        NavigationService?.NavigateTo<PlacesViewModel>();
-
-        Title = "Places";
-        _logger?.Information("Main Places view initialized");
+        _logger?.Information("Places view initialized");
     }
 
     [RelayCommand]
-    public void Navigate()
+    public void Place()
     {
-        NavigationService?.NavigateTo<PlacesViewModel>();
+        NavigationService!.Frame.Navigate(typeof(PlaceViewModel), null, null);
     }
 }
