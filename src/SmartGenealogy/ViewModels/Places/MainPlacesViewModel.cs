@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 
 using FluentAvalonia.UI.Controls;
@@ -40,16 +41,16 @@ public partial class MainPlacesViewModel : MainViewModelBase
         _settingService = settingService;
         _navigationService = navigationService;
 
-        //NavigationService?.Frame =
-        NavigationService?.NavigateTo<PlacesViewModel>();
+        //NavigationService!.CurrentView = Ioc.Default.GetService<PlacesViewModel>()!;
+        //NavigationService?.NavigateTo<PlacesViewModel>();
 
         Title = "Places";
         _logger?.Information("Main Places view initialized");
     }
 
-    [RelayCommand]
-    public void Navigate()
-    {
-        NavigationService?.NavigateTo<PlacesViewModel>();
-    }
+    //[RelayCommand]
+    //public void Navigate()
+    //{
+    //    NavigationService?.NavigateTo<PlacesViewModel>();
+    //}
 }

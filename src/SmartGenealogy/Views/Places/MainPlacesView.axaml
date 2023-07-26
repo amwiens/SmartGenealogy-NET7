@@ -26,10 +26,7 @@
               IsVisible="{Binding NavigationService.CanGoBack}">
         <ui:SymbolIcon Symbol="Back" FontSize="18" />
       </Button>
-      <ui:Frame Name="FrameView"
-                NavigationPageFactory="{Binding NavigationService.NavigationPageFactory}"
-                Content="{Binding NavigationService.CurrentView}"
-                CanGoBack="{Binding NavigationService.CanGoBack, Mode=OneWayToSource}" />
+      <ui:Frame Name="PlacesFrame" />
     </StackPanel>
   </ScrollViewer>
 </UserControl>

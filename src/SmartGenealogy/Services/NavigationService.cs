@@ -4,9 +4,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using FluentAvalonia.UI.Controls;
+using FluentAvalonia.UI.Media.Animation;
 
 using SmartGenealogy.Contracts;
 using SmartGenealogy.ViewModels;
+using SmartGenealogy.ViewModels.Places;
 
 namespace SmartGenealogy.Services;
 
@@ -15,8 +17,19 @@ namespace SmartGenealogy.Services;
 /// </summary>
 public partial class NavigationService : ObservableObject, INavigationService
 {
+    [ObservableProperty]
+    public Frame _frame;
 
-    public Frame Frame { get; set; }
+    partial void OnFrameChanged(Frame value)
+    {
+        Frame!.NavigationPageFactory = Ioc.Default.GetService<INavigationPageFactory>();
+        switch (value.Name)
+        {
+            case "PlacesFrame":
+                Frame.Navigate(typeof(PlacesViewModel), null, new SlideNavigationTransitionInfo());
+                break;
+        }
+    }
 
     [ObservableProperty]
     private bool _canGoBack;
@@ -32,17 +45,17 @@ public partial class NavigationService : ObservableObject, INavigationService
 
     private readonly Func<Type, ViewModelBase> _viewModelFactory;
 
-    public NavigationService(Func<Type, ViewModelBase> viewModelFactory)
+    public NavigationService(Func<Type, ViewModelBase> viewModelFactory, INavigationPageFactory navigationPageFactory)
     {
         _viewModelFactory = viewModelFactory;
-        NavigationPageFactory = Ioc.Default.GetService<INavigationPageFactory>();
-        Frame!.NavigationPageFactory = NavigationPageFactory;
+        //NavigationPageFactory = Ioc.Default.GetService<INavigationPageFactory>();
+        //Frame!.NavigationPageFactory = navigationPageFactory;
     }
 
     public void NavigateTo<TViewModel>() where TViewModel : ViewModelBase
     {
         //ViewModelBase viewModel = _viewModelFactory.Invoke(typeof(TViewModel));
         //CurrentView = viewModel;
-        Frame.Navigate(typeof(TViewModel));
+        Frame.Navigate(typeof(TViewModel), null, new SlideNavigationTransitionInfo());
     }
 }

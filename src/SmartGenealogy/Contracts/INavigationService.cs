@@ -19,7 +19,7 @@ public interface INavigationService
 
     string CurrentViewName { get; }
 
-    ViewModelBase CurrentView { get; }
+    ViewModelBase CurrentView { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
 

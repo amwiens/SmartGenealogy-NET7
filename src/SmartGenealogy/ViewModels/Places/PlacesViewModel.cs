@@ -40,6 +40,7 @@ public partial class PlacesViewModel : ViewModelBase
     [RelayCommand]
     public void Place()
     {
-        NavigationService!.Frame.Navigate(typeof(PlaceViewModel), null, null);
+        NavigationService!.NavigateTo<PlaceViewModel>();
+        //NavigationService!.Frame.Navigate(typeof(PlaceViewModel), null, null);
     }
 }
