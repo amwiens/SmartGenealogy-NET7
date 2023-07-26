@@ -1,12 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Input;
+﻿using System.Collections.Generic;
 
-using FluentAvalonia.UI.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Serilog;
 
 using SmartGenealogy.Contracts;
+using SmartGenealogy.Models;
 using SmartGenealogy.ViewModels.Base;
 
 namespace SmartGenealogy.ViewModels.Places;
@@ -22,35 +22,38 @@ public partial class MainPlacesViewModel : MainViewModelBase
     [ObservableProperty]
     private bool _isVisible;
 
-    [ObservableProperty]
-    private INavigationService? _navigationService;
+    private Stack<PageMarker> _navigationStack = new();
+
+    public PageMarker? CurrentPage
+    {
+        get
+        {
+            if (_navigationStack.TryPeek(out var page))
+                return page;
+
+            return null;
+        }
+    }
+
+    public bool CanNavigateBack => _navigationStack.Count > 1;
+
+    public bool BackButtonEnabled { get; private set; } = true;
 
     /// <summary>
     /// Ctor
     /// </summary>
-    public MainPlacesViewModel() : this(null, null, null) { }
+    public MainPlacesViewModel() : this(null, null) { }
 
     /// <summary>
     /// Ctor
     /// </summary>
     public MainPlacesViewModel(ILogger? logger,
-        ISettingService? settingService,
-        INavigationService? navigationService)
+        ISettingService? settingService)
     {
         _logger = logger;
         _settingService = settingService;
-        _navigationService = navigationService;
-
-        //NavigationService!.CurrentView = Ioc.Default.GetService<PlacesViewModel>()!;
-        //NavigationService?.NavigateTo<PlacesViewModel>();
 
         Title = "Places";
         _logger?.Information("Main Places view initialized");
     }
-
-    //[RelayCommand]
-    //public void Navigate()
-    //{
-    //    NavigationService?.NavigateTo<PlacesViewModel>();
-    //}
 }

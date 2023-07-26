@@ -20,13 +20,21 @@
     <StackPanel Spacing="-75">
       <controls:PageHeaderControl TitleText="{Binding Title, Mode=OneWay}" Classes="smaller" />
 
-      <Button Theme="{StaticResource TransparentButton}"
-              Margin="8"
-              HorizontalAlignment="Left"
-              IsVisible="{Binding NavigationService.CanGoBack}">
-        <ui:SymbolIcon Symbol="Back" FontSize="18" />
-      </Button>
-      <ui:Frame Name="PlacesFrame" />
+      <StackPanel Orientation="Horizontal">
+        <Button Theme="{StaticResource TransparentButton}"
+                Margin="8"
+                HorizontalAlignment="Left"
+                IsEnabled="{Binding BackButtonEnabled}">
+          <ui:SymbolIcon Symbol="Back" FontSize="18" />
+        </Button>
+        <Button Theme="{StaticResource TransparentButton}"
+                Margin="8"
+                HorizontalAlignment="Left">
+          <ui:SymbolIcon Symbol="Forward" FontSize="18" />
+        </Button>
+      </StackPanel>
+
+      <TransitioningContentControl Content="{Binding CurrentPage}" />
     </StackPanel>
   </ScrollViewer>
 </UserControl>

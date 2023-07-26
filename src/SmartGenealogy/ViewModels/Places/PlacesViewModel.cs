@@ -15,24 +15,19 @@ public partial class PlacesViewModel : ViewModelBase
     [ObservableProperty]
     private bool _isVisible;
 
-    [ObservableProperty]
-    private INavigationService? _navigationService;
-
     /// <summary>
     /// Ctor
     /// </summary>
-    public PlacesViewModel() : this(null, null, null) { }
+    public PlacesViewModel() : this(null, null) { }
 
     /// <summary>
     /// Ctor
     /// </summary>
     public PlacesViewModel(ILogger? logger,
-        ISettingService? settingService,
-        INavigationService? navigationService)
+        ISettingService? settingService)
     {
         _logger = logger;
         _settingService = settingService;
-        _navigationService = navigationService;
 
         _logger?.Information("Places view initialized");
     }
@@ -40,7 +35,5 @@ public partial class PlacesViewModel : ViewModelBase
     [RelayCommand]
     public void Place()
     {
-        NavigationService!.NavigateTo<PlaceViewModel>();
-        //NavigationService!.Frame.Navigate(typeof(PlaceViewModel), null, null);
     }
 }

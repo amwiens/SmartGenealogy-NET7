@@ -1,9 +1,4 @@
-using Avalonia;
 using Avalonia.Controls;
-
-using CommunityToolkit.Mvvm.DependencyInjection;
-
-using SmartGenealogy.Contracts;
 
 namespace SmartGenealogy.Views.Places;
 
@@ -18,13 +13,5 @@ public partial class MainPlacesView : UserControl
     public MainPlacesView()
     {
         InitializeComponent();
-    }
-
-    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
-    {
-        base.OnAttachedToVisualTree(e);
-
-        var _navigationService = Ioc.Default.GetService<INavigationService>();
-        _navigationService!.Frame = PlacesFrame;
     }
 }

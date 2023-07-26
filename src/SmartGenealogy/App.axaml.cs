@@ -78,8 +78,6 @@ public partial class App : Application
                 // Services
                 .AddSingleton<ISettingService, SettingService>()
                 .AddSingleton<IMessageBoxService, MessageBoxService>()
-                .AddSingleton<INavigationService, NavigationService>()
-                .AddSingleton<INavigationPageFactory, NavigationFactory>()
                 .AddSingleton(Log.Logger)
                 .AddSingleton<Func<Type, ViewModelBase>>(serviceProvider =>
                     viewModelType => (ViewModelBase)serviceProvider.GetRequiredService(viewModelType))
