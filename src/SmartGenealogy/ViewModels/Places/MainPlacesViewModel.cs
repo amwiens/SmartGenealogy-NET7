@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
-
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+
+using FluentAvalonia.UI.Controls;
+using FluentAvalonia.UI.Media.Animation;
 
 using Serilog;
 
 using SmartGenealogy.Contracts;
-using SmartGenealogy.Models;
+using SmartGenealogy.Messages;
 using SmartGenealogy.ViewModels.Base;
 
 namespace SmartGenealogy.ViewModels.Places;
@@ -14,30 +17,16 @@ namespace SmartGenealogy.ViewModels.Places;
 /// <summary>
 /// Main places view model.
 /// </summary>
-public partial class MainPlacesViewModel : MainViewModelBase
+public partial class MainPlacesViewModel : MainViewModelBase, IRecipient<PlaceNavigationMessage>
 {
     private readonly ILogger? _logger;
     private readonly ISettingService? _settingService;
 
     [ObservableProperty]
-    private bool _isVisible;
+    private ViewModelBase? _currentPage;
 
-    private Stack<PageMarker> _navigationStack = new();
-
-    public PageMarker? CurrentPage
-    {
-        get
-        {
-            if (_navigationStack.TryPeek(out var page))
-                return page;
-
-            return null;
-        }
-    }
-
-    public bool CanNavigateBack => _navigationStack.Count > 1;
-
-    public bool BackButtonEnabled { get; private set; } = true;
+    [ObservableProperty]
+    private Frame? _frame = new();
 
     /// <summary>
     /// Ctor
@@ -53,7 +42,54 @@ public partial class MainPlacesViewModel : MainViewModelBase
         _logger = logger;
         _settingService = settingService;
 
+        WeakReferenceMessenger.Default.Register<PlaceNavigationMessage>(this);
+
         Title = "Places";
         _logger?.Information("Main Places view initialized");
+    }
+
+    /// <summary>
+    /// Receive open file changed messages.
+    /// </summary>
+    /// <param name="message"></param>
+    public void Receive(PlaceNavigationMessage message)
+    {
+        _logger?.Information("Place navigation message received: {Message}", message.Value);
+        var viewModel = message.Value.GetType();
+        switch (viewModel.Name)
+        {
+            case "PlacesViewModel":
+                Navigate<PlacesViewModel>();
+                break;
+
+            case "PlaceViewModel":
+                Navigate<PlaceViewModel>();
+                break;
+        }
+    }
+
+    [RelayCommand]
+    private void Place()
+    {
+        WeakReferenceMessenger.Default.Send(new PlaceNavigationMessage(new PlaceViewModel()));
+    }
+
+    private void Navigate<TViewModel>() where TViewModel : PageViewModelBase
+    {
+        var viewLocator = new ViewLocator();
+        var control = viewLocator.Build(Ioc.Default.GetService<TViewModel>());
+        Frame?.Navigate(control.GetType(), null, new SlideNavigationTransitionInfo());
+    }
+
+    [RelayCommand]
+    private void GoForward()
+    {
+        Frame?.GoForward();
+    }
+
+    [RelayCommand]
+    private void GoBack()
+    {
+        Frame?.GoBack(new SlideNavigationTransitionInfo());
     }
 }

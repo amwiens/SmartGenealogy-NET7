@@ -17,24 +17,37 @@
   </Design.DataContext>
 
   <ScrollViewer>
-    <StackPanel Spacing="-75">
-      <controls:PageHeaderControl TitleText="{Binding Title, Mode=OneWay}" Classes="smaller" />
+      <StackPanel Spacing="-75">
+        <controls:PageHeaderControl TitleText="{Binding Title, Mode=OneWay}"
+                                    Classes="smaller" />
 
-      <StackPanel Orientation="Horizontal">
-        <Button Theme="{StaticResource TransparentButton}"
-                Margin="8"
-                HorizontalAlignment="Left"
-                IsEnabled="{Binding BackButtonEnabled}">
-          <ui:SymbolIcon Symbol="Back" FontSize="18" />
-        </Button>
-        <Button Theme="{StaticResource TransparentButton}"
-                Margin="8"
-                HorizontalAlignment="Left">
-          <ui:SymbolIcon Symbol="Forward" FontSize="18" />
-        </Button>
+        <StackPanel Orientation="Vertical">
+          <StackPanel Orientation="Horizontal">
+            <Button Theme="{StaticResource TransparentButton}"
+                    Margin="8"
+                    HorizontalAlignment="Left"
+                    IsEnabled="{Binding Frame.CanGoBack}"
+                    Command="{Binding GoBackCommand}">
+              <ui:SymbolIcon Symbol="Back" FontSize="18" />
+            </Button>
+            <Button Theme="{StaticResource TransparentButton}"
+                    Margin="8"
+                    HorizontalAlignment="Left"
+                    IsEnabled="{Binding Frame.CanGoForward}"
+                    Command="{Binding GoForwardCommand}">
+              <ui:SymbolIcon Symbol="Forward" FontSize="18" />
+            </Button>
+            <Button Theme="{StaticResource TransparentButton}"
+                    Margin="8"
+                    HorizontalAlignment="Left"
+                    Command="{Binding PlaceCommand}">
+              <ui:SymbolIcon Symbol="Forward" FontSize="18" />
+            </Button>
+          </StackPanel>
+
+          <ui:Frame Name="PlacesFrame"
+                    Content="{Binding Frame.Content}" />
+        </StackPanel>
       </StackPanel>
-
-      <TransitioningContentControl Content="{Binding CurrentPage}" />
-    </StackPanel>
   </ScrollViewer>
 </UserControl>

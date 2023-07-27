@@ -1,9 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 
@@ -68,7 +66,7 @@ public partial class MainFileViewModel : MainViewModelBase
     private void SetFileInformation()
     {
         CurrentFile = $"Current File: {_settingService?.Settings.FileName}";
-        _context.DatabasePath = _settingService?.Settings.FileName!;
+        _context!.DatabasePath = _settingService?.Settings.FileName!;
         IsFileOpen = !string.IsNullOrEmpty(_settingService?.Settings.FileName);
         WeakReferenceMessenger.Default.Send(new OpenFileChangedMessage(IsFileOpen));
     }
@@ -81,7 +79,7 @@ public partial class MainFileViewModel : MainViewModelBase
     {
         _logger?.Information("Create file button clicked");
         var directory = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Program))?.Location);
-        var fileName = Path.Combine(directory, "test.sgdb");
+        var fileName = Path.Combine(directory!, "test.sgdb");
         _settingService!.Settings.FileName = fileName;
         SetFileInformation();
         await _messageBoxService?.CreateNotification("Database created.")!;
