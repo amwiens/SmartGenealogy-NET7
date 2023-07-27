@@ -3,6 +3,7 @@
 using Serilog;
 
 using SmartGenealogy.Contracts;
+using SmartGenealogy.Persistence.Models;
 using SmartGenealogy.ViewModels.Base;
 
 namespace SmartGenealogy.ViewModels.Places;
@@ -13,7 +14,10 @@ public partial class PlaceViewModel : PageViewModelBase
     private readonly ISettingService? _settingService;
 
     [ObservableProperty]
-    private bool _isVisible;
+    private Place? _place = new();
+
+    [ObservableProperty]
+    private long? _placeId = null;
 
     /// <summary>
     /// Ctor

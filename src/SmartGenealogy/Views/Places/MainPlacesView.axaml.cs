@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using FluentAvalonia.UI.Controls;
 
 using SmartGenealogy.Messages;
+using SmartGenealogy.Services;
 using SmartGenealogy.ViewModels.Places;
 
 namespace SmartGenealogy.Views.Places;
@@ -24,6 +25,10 @@ public partial class MainPlacesView : UserControl
         InitializeComponent();
     }
 
+    /// <summary>
+    /// OnAttached to visual tree
+    /// </summary>
+    /// <param name="e"></param>
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         base.OnAttachedToVisualTree(e);
@@ -31,7 +36,8 @@ public partial class MainPlacesView : UserControl
         var vm = Ioc.Default.GetService<MainPlacesViewModel>();
 
         var frame = this.FindControl<Frame>("PlacesFrame");
+        frame!.NavigationPageFactory = new PlacePageNavigationFactory();
         vm!.Frame = frame;
-        WeakReferenceMessenger.Default.Send(new PlaceNavigationMessage(new PlacesViewModel()));
+        WeakReferenceMessenger.Default.Send(new PlaceNavigationMessage(new PlaceNavigationData { ViewModelType = "PlacesViewModel" }));
     }
 }

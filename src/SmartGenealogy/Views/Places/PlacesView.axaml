@@ -4,12 +4,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:SmartGenealogy.ViewModels.Places"
-             xmlns:models="clr-namespace:SmartGenealogy.Models"
+             xmlns:models="clr-namespace:SmartGenealogy.Persistence.Models;assembly=SmartGenealogy.Persistence"
              xmlns:controls="clr-namespace:SmartGenealogy.Controls"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:views="clr-namespace:SmartGenealogy.Views.Places"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True" x:DataType="vm:PlacesViewModel">
+  <Design.DataContext>
+    <vm:PlacesViewModel>
+      <vm:PlacesViewModel.Places>
+        <models:Place>
+          <models:Place.Name>Munich</models:Place.Name>
+          <models:Place.Latitude>42</models:Place.Latitude>
+          <models:Place.Longitude>98</models:Place.Longitude>
+        </models:Place>
+      </vm:PlacesViewModel.Places>
+    </vm:PlacesViewModel>
+  </Design.DataContext>
   <StackPanel>
     <StackPanel Orientation="Horizontal">
 
@@ -29,10 +40,11 @@
     <DataGrid AutoGenerateColumns="False"
               ItemsSource="{Binding Places}"
               SelectedItem="{Binding SelectedPlace}"
-              SelectionMode="Single">
+              SelectionMode="Single"
+              IsReadOnly="True">
       <Interaction.Behaviors>
         <EventTriggerBehavior EventName="DoubleTapped">
-          <InvokeCommandAction Command="{Binding DoubleTappedCommand}" />
+          <InvokeCommandAction Command="{Binding GoToPlaceCommand}" />
         </EventTriggerBehavior>
       </Interaction.Behaviors>
 

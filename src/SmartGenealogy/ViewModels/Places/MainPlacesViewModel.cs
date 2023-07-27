@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Media.Animation;
+using FluentAvalonia.UI.Navigation;
 
 using Serilog;
 
@@ -55,15 +56,17 @@ public partial class MainPlacesViewModel : MainViewModelBase, IRecipient<PlaceNa
     public void Receive(PlaceNavigationMessage message)
     {
         _logger?.Information("Place navigation message received: {Message}", message.Value);
-        var viewModel = message.Value.GetType();
-        switch (viewModel.Name)
+        switch (message.Value.ViewModelType)
         {
             case "PlacesViewModel":
-                Navigate<PlacesViewModel>();
+                var placesViewModel = Ioc.Default.GetService<PlacesViewModel>();
+                Frame?.NavigateFromObject(placesViewModel, new FrameNavigationOptions { TransitionInfoOverride = new SlideNavigationTransitionInfo() });
                 break;
 
             case "PlaceViewModel":
-                Navigate<PlaceViewModel>();
+                var placeViewModel = Ioc.Default.GetService<PlaceViewModel>();
+                placeViewModel!.PlaceId = message.Value.Id;
+                Frame?.NavigateFromObject(placeViewModel, new FrameNavigationOptions { TransitionInfoOverride = new SlideNavigationTransitionInfo() });
                 break;
         }
     }
@@ -71,14 +74,15 @@ public partial class MainPlacesViewModel : MainViewModelBase, IRecipient<PlaceNa
     [RelayCommand]
     private void Place()
     {
-        WeakReferenceMessenger.Default.Send(new PlaceNavigationMessage(new PlaceViewModel()));
+        WeakReferenceMessenger.Default.Send(new PlaceNavigationMessage(new PlaceNavigationData { ViewModelType = "PlaceViewModel" }));
     }
 
-    private void Navigate<TViewModel>() where TViewModel : PageViewModelBase
+    private void Navigate<TViewModel>() where TViewModel : ViewModelBase
     {
         var viewLocator = new ViewLocator();
         var control = viewLocator.Build(Ioc.Default.GetService<TViewModel>());
         Frame?.Navigate(control.GetType(), null, new SlideNavigationTransitionInfo());
+        //Frame.NavigateFromObject(TViewModel)
     }
 
     [RelayCommand]
