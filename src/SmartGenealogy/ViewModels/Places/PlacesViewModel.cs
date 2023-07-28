@@ -11,7 +11,6 @@ using Serilog;
 using SmartGenealogy.Contracts;
 using SmartGenealogy.Messages;
 using SmartGenealogy.Persistence.Models;
-using SmartGenealogy.ViewModels.Base;
 
 namespace SmartGenealogy.ViewModels.Places;
 
@@ -25,8 +24,7 @@ public partial class PlacesViewModel : ViewModelBase
     [ObservableProperty]
     private bool _isLoading = true;
 
-    //[ObservableProperty]
-    public ObservableCollection<Place> Places { get; private set; }
+    public ObservableCollection<Place>? Places { get; private set; }
 
     [ObservableProperty]
     private Place _selectedPlace = new();
@@ -52,7 +50,10 @@ public partial class PlacesViewModel : ViewModelBase
         if (placeRepository != null)
         {
             LoadPlaces();
-            SelectedPlace = Places![0];
+            if (Places!.Any())
+            {
+                SelectedPlace = Places![0];
+            }
         }
 
         _logger?.Information("Places view initialized");
@@ -60,9 +61,6 @@ public partial class PlacesViewModel : ViewModelBase
 
     private void LoadPlaces()
     {
-        //_placeRepository?.Add(new Place { Name = "Munich, Cavalier, North Dakota, United States", Latitude = 48.669516m, Longitude = -98.835677m });
-        //_placeRepository?.Add(new Place { Name = "Langdon, Cavalier, North Dakota, United States", Latitude = 48.761696m, Longitude = -98.371780m });
-        //_placeRepository?.Add(new Place { Name = "Rochester, Olmsted, Minnesota, United States", Latitude = 44.0234m, Longitude = -92.46295m });
         Places = new ObservableCollection<Place>(_placeRepository!.GetAll().ToList());
     }
 
@@ -75,6 +73,9 @@ public partial class PlacesViewModel : ViewModelBase
     [RelayCommand]
     private async Task AddPlace()
     {
+        //_placeRepository?.Add(new Place { Name = "Munich, Cavalier, North Dakota, United States", Latitude = 48.669516m, Longitude = -98.835677m });
+        //_placeRepository?.Add(new Place { Name = "Langdon, Cavalier, North Dakota, United States", Latitude = 48.761696m, Longitude = -98.371780m });
+        //_placeRepository?.Add(new Place { Name = "Rochester, Olmsted, Minnesota, United States", Latitude = 44.0234m, Longitude = -92.46295m });
         await _messageBoxService!.CreateNotification("This is a test!");
     }
 

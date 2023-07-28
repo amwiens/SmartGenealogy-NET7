@@ -11,6 +11,7 @@ using Serilog;
 
 using SmartGenealogy.Contracts;
 using SmartGenealogy.Messages;
+using SmartGenealogy.Services;
 using SmartGenealogy.ViewModels.Base;
 
 namespace SmartGenealogy.ViewModels.Places;
@@ -60,12 +61,14 @@ public partial class MainPlacesViewModel : MainViewModelBase, IRecipient<PlaceNa
         {
             case "PlacesViewModel":
                 var placesViewModel = Ioc.Default.GetService<PlacesViewModel>();
+                Frame!.NavigationPageFactory = new PlacePageNavigationFactory();
                 Frame?.NavigateFromObject(placesViewModel, new FrameNavigationOptions { TransitionInfoOverride = new SlideNavigationTransitionInfo() });
                 break;
 
             case "PlaceViewModel":
                 var placeViewModel = Ioc.Default.GetService<PlaceViewModel>();
                 placeViewModel!.PlaceId = message.Value.Id;
+                Frame!.NavigationPageFactory = new PlacePageNavigationFactory();
                 Frame?.NavigateFromObject(placeViewModel, new FrameNavigationOptions { TransitionInfoOverride = new SlideNavigationTransitionInfo() });
                 break;
         }
