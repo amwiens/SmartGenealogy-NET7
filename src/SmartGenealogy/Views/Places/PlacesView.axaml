@@ -10,38 +10,38 @@
              xmlns:views="clr-namespace:SmartGenealogy.Views.Places"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True" x:DataType="vm:PlacesViewModel">
-  <Design.DataContext>
-    <vm:PlacesViewModel>
-      <vm:PlacesViewModel.Places>
-        <models:Place>
-          <models:Place.Name>Munich</models:Place.Name>
-          <models:Place.Latitude>42</models:Place.Latitude>
-          <models:Place.Longitude>98</models:Place.Longitude>
-        </models:Place>
-      </vm:PlacesViewModel.Places>
-    </vm:PlacesViewModel>
-  </Design.DataContext>
-  <StackPanel>
-    <StackPanel Orientation="Horizontal">
+  <Grid RowDefinitions="Auto,*">
+    <StackPanel Orientation="Horizontal"
+                Grid.Row="0"
+                HorizontalAlignment="Right">
 
       <Button Theme="{StaticResource TransparentButton}"
               Margin="8"
-              HorizontalAlignment="Right"
-              Command="{Binding AddPlaceCommand}">
+              Command="{Binding AddPlaceCommand}"
+              ToolTip.Tip="Add a place">
         <ui:SymbolIcon Symbol="Add" FontSize="18" />
       </Button>
-      <Button Theme="{StaticResource TransparentButton}"
-          Margin="8"
-          HorizontalAlignment="Right">
-        <ui:SymbolIcon Symbol="More" FontSize="18" />
-      </Button>
+      <DropDownButton Theme="{StaticResource TransparentButton}"
+                      Content="&#xE712;"
+                      FontSize="18"
+                      FontFamily="{StaticResource SymbolThemeFontFamily}"
+                      Margin="8">
+        <DropDownButton.Flyout>
+          <ui:FAMenuFlyout Placement="BottomEdgeAlignedRight">
+            <ui:MenuFlyoutItem Text="Delete"
+                               Command="{Binding DeletePlaceCommand}" />
+
+          </ui:FAMenuFlyout>
+        </DropDownButton.Flyout>
+      </DropDownButton>
     </StackPanel>
 
     <DataGrid AutoGenerateColumns="False"
-              ItemsSource="{Binding Places}"
+              ItemsSource="{Binding Places, Mode=TwoWay}"
               SelectedItem="{Binding SelectedPlace}"
               SelectionMode="Single"
-              IsReadOnly="True">
+              IsReadOnly="True"
+              Grid.Row="1">
       <Interaction.Behaviors>
         <EventTriggerBehavior EventName="DoubleTapped">
           <InvokeCommandAction Command="{Binding GoToPlaceCommand}" />
@@ -54,5 +54,5 @@
         <DataGridTextColumn Header="Longitude" Binding="{Binding Longitude}" />
       </DataGrid.Columns>
     </DataGrid>
-  </StackPanel>
+  </Grid>
 </UserControl>

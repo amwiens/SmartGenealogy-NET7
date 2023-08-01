@@ -1,7 +1,7 @@
-using Avalonia.Controls;
+using SmartGenealogy.Views.Base;
 
 namespace SmartGenealogy.Views.Tasks;
-public partial class MainTasksView : UserControl
+public partial class MainTasksView : MainViewBase
 {
     public MainTasksView()
     {

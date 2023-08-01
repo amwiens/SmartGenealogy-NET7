@@ -21,7 +21,5 @@ public partial class MainTasksViewModel : MainViewModelBase
     {
         _logger = logger;
         _settingService = settingService;
-
-        Title = "Tasks";
     }
 }

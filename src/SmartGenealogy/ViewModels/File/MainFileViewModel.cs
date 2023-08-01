@@ -55,7 +55,6 @@ public partial class MainFileViewModel : MainViewModelBase
         _messageBoxService = messageBoxService;
         _context = context;
 
-        Title = "File";
         SetFileInformation();
         _logger?.Information("File Window initialized");
     }

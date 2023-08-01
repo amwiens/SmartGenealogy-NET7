@@ -18,13 +18,13 @@ public class PlacePageNavigationFactory : INavigationPageFactory
 
     public Control? GetPageFromObject(object target)
     {
-        if (target is PlaceViewModel)
-        {
-            return new PlaceView() { DataContext = target };
-        }
-        else if (target is PlacesViewModel)
+        if (target is PlacesViewModel)
         {
             return new PlacesView() { DataContext = target };
+        }
+        else if (target is PlaceViewModel)
+        {
+            return new PlaceView() { DataContext = target };
         }
 
         return null;

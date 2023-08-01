@@ -1,11 +1,11 @@
-using Avalonia.Controls;
+using SmartGenealogy.Views.Base;
 
 namespace SmartGenealogy.Views.Addresses;
 
 /// <summary>
 /// Main addresses view.
 /// </summary>
-public partial class MainAddressesView : UserControl
+public partial class MainAddressesView : MainViewBase
 {
     /// <summary>
     /// Ctor

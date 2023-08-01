@@ -1,11 +1,11 @@
-using Avalonia.Controls;
+using SmartGenealogy.Views.Base;
 
 namespace SmartGenealogy.Views.Publish;
 
 /// <summary>
 /// Main publish view.
 /// </summary>
-public partial class MainPublishView : UserControl
+public partial class MainPublishView : MainViewBase
 {
     /// <summary>
     /// Ctor

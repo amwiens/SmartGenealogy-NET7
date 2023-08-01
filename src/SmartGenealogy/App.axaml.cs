@@ -88,7 +88,7 @@ public partial class App : Application
                 .AddTransient<HomeViewModel>()
                 .AddTransient<MainFileViewModel>()
                 .AddTransient<MainPeopleViewModel>()
-                .AddSingleton<MainPlacesViewModel>()
+                .AddTransient<MainPlacesViewModel>()
                 .AddTransient<PlacesViewModel>()
                 .AddTransient<PlaceViewModel>()
                 .AddTransient<MainSourcesViewModel>()

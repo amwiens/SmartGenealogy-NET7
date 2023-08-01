@@ -21,7 +21,5 @@ public partial class MainPublishViewModel : MainViewModelBase
     {
         _logger = logger;
         _settingService = settingService;
-
-        Title = "Publish";
     }
 }

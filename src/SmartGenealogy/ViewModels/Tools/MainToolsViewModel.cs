@@ -21,7 +21,5 @@ public partial class MainToolsViewModel : MainViewModelBase
     {
         _logger = logger;
         _settingService = settingService;
-
-        Title = "Tools";
     }
 }

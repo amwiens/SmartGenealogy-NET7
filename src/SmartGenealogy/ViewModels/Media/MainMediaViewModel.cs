@@ -21,7 +21,5 @@ public partial class MainMediaViewModel : MainViewModelBase
     {
         _logger = logger;
         _settingService = settingService;
-
-        Title = "Media";
     }
 }

@@ -21,7 +21,5 @@ public partial class MainPeopleViewModel : MainViewModelBase
     {
         _logger = logger;
         _settingService = settingService;
-
-        Title = "People";
     }
 }

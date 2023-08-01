@@ -6,11 +6,14 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
+using FluentAvalonia.UI.Controls;
+
 using Serilog;
 
 using SmartGenealogy.Contracts;
 using SmartGenealogy.Messages;
 using SmartGenealogy.Persistence.Models;
+using SmartGenealogy.Views.Places;
 
 namespace SmartGenealogy.ViewModels.Places;
 
@@ -59,11 +62,17 @@ public partial class PlacesViewModel : ViewModelBase
         _logger?.Information("Places view initialized");
     }
 
+    /// <summary>
+    /// Load places list
+    /// </summary>
     private void LoadPlaces()
     {
-        Places = new ObservableCollection<Place>(_placeRepository!.GetAll().ToList());
+        Places = new ObservableCollection<Place>(_placeRepository!.GetAll().ToList().OrderBy(x => x.Name));
     }
 
+    /// <summary>
+    /// Go to place
+    /// </summary>
     [RelayCommand]
     private void GoToPlace()
     {
@@ -73,15 +82,37 @@ public partial class PlacesViewModel : ViewModelBase
     [RelayCommand]
     private async Task AddPlace()
     {
-        //_placeRepository?.Add(new Place { Name = "Munich, Cavalier, North Dakota, United States", Latitude = 48.669516m, Longitude = -98.835677m });
-        //_placeRepository?.Add(new Place { Name = "Langdon, Cavalier, North Dakota, United States", Latitude = 48.761696m, Longitude = -98.371780m });
-        //_placeRepository?.Add(new Place { Name = "Rochester, Olmsted, Minnesota, United States", Latitude = 44.0234m, Longitude = -92.46295m });
-        await _messageBoxService!.CreateNotification("This is a test!");
+        var dialog = new ContentDialog()
+        {
+            Title = "Add a place",
+            PrimaryButtonText = "OK",
+            CloseButtonText = "Cancel",
+        };
+
+        var viewModel = new AddPlaceContentDialogViewModel(dialog);
+        dialog.Content = new AddPlaceContentDialogView()
+        {
+            DataContext = viewModel
+        };
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            var view = dialog.Content as AddPlaceContentDialogView;
+            var vm = view!.DataContext as AddPlaceContentDialogViewModel;
+
+            if (!string.IsNullOrEmpty(vm!.UserInput))
+            {
+                _placeRepository!.Add(new Place { Name = vm.UserInput });
+                LoadPlaces();
+            }
+        }
     }
 
     [RelayCommand]
-    private void DoubleTapped()
+    private async Task DeletePlace()
     {
-
+        await _messageBoxService!.CreateNotification($"Delete place: {SelectedPlace.Name}?");
     }
 }

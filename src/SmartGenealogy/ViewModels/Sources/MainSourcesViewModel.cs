@@ -21,7 +21,5 @@ public partial class MainSourcesViewModel : MainViewModelBase
     {
         _logger = logger;
         _settingService = settingService;
-
-        Title = "Sources";
     }
 }
