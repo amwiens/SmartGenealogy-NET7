@@ -7,12 +7,38 @@
              xmlns:models="clr-namespace:SmartGenealogy.Models"
              xmlns:controls="clr-namespace:SmartGenealogy.Controls"
              xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:views="clr-namespace:SmartGenealogy.Views.Places"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:CompileBindings="True" x:DataType="vm:MainPlacesViewModel">
+             x:CompileBindings="True" x:DataType="vm:MainPlacesViewModel"
+             PageName="Places">
+  <Design.DataContext>
+    <vm:MainPlacesViewModel>
+      <vm:MainPlacesViewModel.Title>Places</vm:MainPlacesViewModel.Title>
+    </vm:MainPlacesViewModel>
+  </Design.DataContext>
 
-  <ScrollViewer>
-    <StackPanel Spacing="-75">
-      <controls:PageHeaderControl TitleText="{Binding Title, Mode=OneWay}" Classes="smaller" />
+  <StackPanel Spacing="8">
+    <StackPanel Orientation="Vertical">
+      <StackPanel Orientation="Horizontal">
+        <Button Theme="{StaticResource TransparentButton}"
+                Margin="8"
+                HorizontalAlignment="Left"
+                Command="{Binding #PlacesFrame.GoBack}"
+                IsEnabled="{Binding #PlacesFrame.CanGoBack}"
+                ToolTip.Tip="Go back">
+          <ui:SymbolIcon Symbol="Back" FontSize="18" />
+        </Button>
+        <Button Theme="{StaticResource TransparentButton}"
+                Margin="8"
+                HorizontalAlignment="Left"
+                Command="{Binding #PlacesFrame.GoForward}"
+                IsEnabled="{Binding #PlacesFrame.CanGoForward}"
+                ToolTip.Tip="Go forward">
+          <ui:SymbolIcon Symbol="Forward" FontSize="18" />
+        </Button>
+      </StackPanel>
+
+      <ui:Frame Name="PlacesFrame" />
     </StackPanel>
-  </ScrollViewer>
+  </StackPanel>
 </UserControl>

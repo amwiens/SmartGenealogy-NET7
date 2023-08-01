@@ -1,9 +1,13 @@
-﻿using Avalonia;
+﻿using System;
+
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 
 using CommunityToolkit.Mvvm.DependencyInjection;
+
+using FluentAvalonia.UI.Controls;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +15,7 @@ using Serilog;
 
 using SmartGenealogy.Contracts;
 using SmartGenealogy.Persistence;
+using SmartGenealogy.Persistence.Models;
 using SmartGenealogy.Services;
 using SmartGenealogy.ViewModels;
 using SmartGenealogy.ViewModels.Addresses;
@@ -74,12 +79,18 @@ public partial class App : Application
                 .AddSingleton<ISettingService, SettingService>()
                 .AddSingleton<IMessageBoxService, MessageBoxService>()
                 .AddSingleton(Log.Logger)
+                .AddSingleton<Func<Type, ViewModelBase>>(serviceProvider =>
+                    viewModelType => (ViewModelBase)serviceProvider.GetRequiredService(viewModelType))
+                // Repositories
+                .AddScoped<IDataRepository<Place>, PlaceRepository>()
                 // ViewModels
                 .AddTransient<MainViewModel>()
                 .AddTransient<HomeViewModel>()
                 .AddTransient<MainFileViewModel>()
                 .AddTransient<MainPeopleViewModel>()
                 .AddTransient<MainPlacesViewModel>()
+                .AddTransient<PlacesViewModel>()
+                .AddTransient<PlaceViewModel>()
                 .AddTransient<MainSourcesViewModel>()
                 .AddTransient<MainMediaViewModel>()
                 .AddTransient<MainTasksViewModel>()

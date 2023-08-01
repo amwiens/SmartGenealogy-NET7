@@ -1,8 +1,15 @@
-using Avalonia.Controls;
+using SmartGenealogy.Views.Base;
 
 namespace SmartGenealogy.Views.People;
-public partial class MainPeopleView : UserControl
+
+/// <summary>
+/// Main people view
+/// </summary>
+public partial class MainPeopleView : MainViewBase
 {
+    /// <summary>
+    /// Ctor
+    /// </summary>
     public MainPeopleView()
     {
         InitializeComponent();

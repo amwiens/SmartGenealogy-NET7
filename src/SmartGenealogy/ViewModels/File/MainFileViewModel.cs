@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 
 using Avalonia.Controls;
@@ -12,6 +13,7 @@ using Serilog;
 
 using SmartGenealogy.Contracts;
 using SmartGenealogy.Messages;
+using SmartGenealogy.Persistence;
 using SmartGenealogy.Persistence.Extensions;
 using SmartGenealogy.ViewModels.Base;
 
@@ -25,6 +27,7 @@ public partial class MainFileViewModel : MainViewModelBase
     private readonly ILogger? _logger;
     private readonly ISettingService? _settingService;
     private readonly IMessageBoxService? _messageBoxService;
+    private readonly SmartGenealogyContext? _context;
 
     [ObservableProperty]
     private bool _isFileOpen;
@@ -35,7 +38,7 @@ public partial class MainFileViewModel : MainViewModelBase
     /// <summary>
     /// Ctor
     /// </summary>
-    public MainFileViewModel() : this(null, null, null)
+    public MainFileViewModel() : this(null, null, null, null)
     {
     }
 
@@ -44,16 +47,16 @@ public partial class MainFileViewModel : MainViewModelBase
     /// </summary>
     public MainFileViewModel(ILogger? logger,
         ISettingService? settingService,
-        IMessageBoxService? messageBoxService)
+        IMessageBoxService? messageBoxService,
+        SmartGenealogyContext? context)
     {
         _logger = logger;
         _settingService = settingService;
         _messageBoxService = messageBoxService;
+        _context = context;
 
-        Title = "File";
         SetFileInformation();
         _logger?.Information("File Window initialized");
-        _messageBoxService = messageBoxService;
     }
 
     /// <summary>
@@ -62,7 +65,9 @@ public partial class MainFileViewModel : MainViewModelBase
     private void SetFileInformation()
     {
         CurrentFile = $"Current File: {_settingService?.Settings.FileName}";
+        _context!.DatabasePath = _settingService?.Settings.FileName!;
         IsFileOpen = !string.IsNullOrEmpty(_settingService?.Settings.FileName);
+        WeakReferenceMessenger.Default.Send(new OpenFileChangedMessage(IsFileOpen));
     }
 
     /// <summary>
@@ -72,7 +77,15 @@ public partial class MainFileViewModel : MainViewModelBase
     private async Task CreateFile()
     {
         _logger?.Information("Create file button clicked");
-        await _messageBoxService?.CreateNotification("Open functionality coming soon.")!;
+        var directory = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Program))?.Location);
+        var fileName = Path.Combine(directory!, "test.sgdb");
+        _settingService!.Settings.FileName = fileName;
+        SetFileInformation();
+        await _messageBoxService?.CreateNotification("Database created.")!;
+        if (System.IO.File.Exists(fileName))
+        {
+            await _messageBoxService?.CreateNotification("File exists.")!;
+        }
     }
 
     /// <summary>
@@ -95,7 +108,7 @@ public partial class MainFileViewModel : MainViewModelBase
             return;
         }
 
-        var file = dialog[0].Path;
+        var file = dialog[0].Path.AbsolutePath;
         _logger?.Information("User chose file {File}", file);
 
         if (file.ToString().IsSQLiteDatabase())
@@ -103,7 +116,6 @@ public partial class MainFileViewModel : MainViewModelBase
             _logger?.Information("File is SQLite database.");
             _settingService!.Settings.FileName = file.ToString();
             SetFileInformation();
-            WeakReferenceMessenger.Default.Send(new OpenFileChangedMessage(true));
         }
         else
         {
@@ -174,6 +186,5 @@ public partial class MainFileViewModel : MainViewModelBase
         _logger?.Information("Close file button clicked");
         _settingService!.Settings.FileName = null;
         SetFileInformation();
-        WeakReferenceMessenger.Default.Send(new OpenFileChangedMessage(false));
     }
 }

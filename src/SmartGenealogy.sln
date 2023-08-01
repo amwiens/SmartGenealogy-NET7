@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Z. Tests", "Z. Tests", "{33
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartGenealogy", "SmartGenealogy\SmartGenealogy.csproj", "{E45AB5F0-7235-4C15-A09C-013915B3FD71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartGenealogy.Persistence", "SmartGenealogy.Persistence\SmartGenealogy.Persistence.csproj", "{52EBEBA7-990A-4F06-8934-1109AA7922B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartGenealogy.Persistence", "SmartGenealogy.Persistence\SmartGenealogy.Persistence.csproj", "{52EBEBA7-990A-4F06-8934-1109AA7922B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

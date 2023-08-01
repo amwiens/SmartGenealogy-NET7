@@ -1,8 +1,17 @@
 using Avalonia.Controls;
 
+using SmartGenealogy.Views.Base;
+
 namespace SmartGenealogy.Views.Sources;
-public partial class MainSourcesView : UserControl
+
+/// <summary>
+/// Main sources view.
+/// </summary>
+public partial class MainSourcesView : MainViewBase
 {
+    /// <summary>
+    /// Ctor
+    /// </summary>
     public MainSourcesView()
     {
         InitializeComponent();
