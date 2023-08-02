@@ -1,6 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Avalonia.Collections;
+
+using AvaloniaEdit.Utils;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -27,7 +32,7 @@ public partial class PlacesViewModel : ViewModelBase
     [ObservableProperty]
     private bool _isLoading = true;
 
-    public ObservableCollection<Place>? Places { get; private set; }
+    public ObservableCollection<Place>? Places { get; } = new() { };
 
     [ObservableProperty]
     private Place _selectedPlace = new();
@@ -67,7 +72,8 @@ public partial class PlacesViewModel : ViewModelBase
     /// </summary>
     private void LoadPlaces()
     {
-        Places = new ObservableCollection<Place>(_placeRepository!.GetAll().ToList().OrderBy(x => x.Name));
+        Places?.Clear();
+        Places?.AddRange(_placeRepository!.GetAll().ToList().OrderBy(x => x.Name));
     }
 
     /// <summary>
@@ -86,6 +92,7 @@ public partial class PlacesViewModel : ViewModelBase
         {
             Title = "Add a place",
             PrimaryButtonText = "OK",
+            DefaultButton = ContentDialogButton.Primary,
             CloseButtonText = "Cancel",
         };
 
@@ -104,15 +111,20 @@ public partial class PlacesViewModel : ViewModelBase
 
             if (!string.IsNullOrEmpty(vm!.UserInput))
             {
-                _placeRepository!.Add(new Place { Name = vm.UserInput });
+                var place = new Place { Name = vm.UserInput };
+                _placeRepository!.Add(place);
                 LoadPlaces();
             }
         }
+        _logger?.Information("Place added.");
     }
 
     [RelayCommand]
     private async Task DeletePlace()
     {
         await _messageBoxService!.CreateNotification($"Delete place: {SelectedPlace.Name}?");
+        _placeRepository!.Delete(SelectedPlace);
+        Places?.Remove(SelectedPlace);
+        _logger?.Information("Place deleted.");
     }
 }
