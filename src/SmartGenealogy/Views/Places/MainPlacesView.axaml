@@ -11,34 +11,29 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True" x:DataType="vm:MainPlacesViewModel"
              PageName="Places">
-  <Design.DataContext>
-    <vm:MainPlacesViewModel>
-      <vm:MainPlacesViewModel.Title>Places</vm:MainPlacesViewModel.Title>
-    </vm:MainPlacesViewModel>
-  </Design.DataContext>
-
-  <StackPanel Spacing="8">
-    <StackPanel Orientation="Vertical">
-      <StackPanel Orientation="Horizontal">
-        <Button Theme="{StaticResource TransparentButton}"
-                Margin="8"
-                HorizontalAlignment="Left"
-                Command="{Binding #PlacesFrame.GoBack}"
-                IsEnabled="{Binding #PlacesFrame.CanGoBack}"
-                ToolTip.Tip="Go back">
-          <ui:SymbolIcon Symbol="Back" FontSize="18" />
-        </Button>
-        <Button Theme="{StaticResource TransparentButton}"
-                Margin="8"
-                HorizontalAlignment="Left"
-                Command="{Binding #PlacesFrame.GoForward}"
-                IsEnabled="{Binding #PlacesFrame.CanGoForward}"
-                ToolTip.Tip="Go forward">
-          <ui:SymbolIcon Symbol="Forward" FontSize="18" />
-        </Button>
-      </StackPanel>
-
-      <ui:Frame Name="PlacesFrame" />
+  <Grid RowDefinitions="Auto,*"
+        Margin="8">
+    <StackPanel Orientation="Horizontal"
+                Grid.Row="0">
+      <Button Theme="{StaticResource TransparentButton}"
+              Margin="8"
+              HorizontalAlignment="Left"
+              Command="{Binding #PlacesFrame.GoBack}"
+              IsEnabled="{Binding #PlacesFrame.CanGoBack}"
+              ToolTip.Tip="Go back">
+        <ui:SymbolIcon Symbol="Back" FontSize="18" />
+      </Button>
+      <Button Theme="{StaticResource TransparentButton}"
+              Margin="8"
+              HorizontalAlignment="Left"
+              Command="{Binding #PlacesFrame.GoForward}"
+              IsEnabled="{Binding #PlacesFrame.CanGoForward}"
+              ToolTip.Tip="Go forward">
+        <ui:SymbolIcon Symbol="Forward" FontSize="18" />
+      </Button>
     </StackPanel>
-  </StackPanel>
+
+    <ui:Frame Name="PlacesFrame"
+              Grid.Row="1" />
+  </Grid>
 </UserControl>
