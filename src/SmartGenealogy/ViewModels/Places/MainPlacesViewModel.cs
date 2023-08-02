@@ -27,6 +27,6 @@ public partial class MainPlacesViewModel : MainViewModelBase
         _logger = logger;
         _settingService = settingService;
 
-        _logger?.Information("Main Places view initialized");
+        _logger?.Information("Main places view initialized");
     }
 }
