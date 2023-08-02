@@ -10,8 +10,8 @@ namespace SmartGenealogy.ViewModels.Tasks;
 /// </summary>
 public partial class MainTasksViewModel : MainViewModelBase
 {
-    private readonly ILogger _logger;
-    private readonly ISettingService _settingService;
+    private readonly ILogger? _logger;
+    private readonly ISettingService? _settingService;
 
     /// <summary>
     /// Ctor
@@ -21,5 +21,7 @@ public partial class MainTasksViewModel : MainViewModelBase
     {
         _logger = logger;
         _settingService = settingService;
+
+        _logger?.Information("Main tasks view initialized");
     }
 }

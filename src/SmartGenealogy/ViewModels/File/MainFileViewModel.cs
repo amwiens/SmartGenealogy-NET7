@@ -56,7 +56,7 @@ public partial class MainFileViewModel : MainViewModelBase
         _context = context;
 
         SetFileInformation();
-        _logger?.Information("File Window initialized");
+        _logger?.Information("Main file view initialized");
     }
 
     /// <summary>
