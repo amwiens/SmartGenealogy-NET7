@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 
-using Mapsui;
 using Mapsui.Tiling;
 
 namespace SmartGenealogy.Views.Places;
@@ -17,10 +16,6 @@ public partial class PlaceView : UserControl
     {
         InitializeComponent();
 
-        var map = new Map();
-        map!.Layers.Add(OpenStreetMap.CreateTileLayer());
-        //map.Home = n => n.CenterOnAndZoomTo(new MPoint())
-
-        MapControl.Map = map;
+        MapControl.Map?.Layers.Add(OpenStreetMap.CreateTileLayer());
     }
 }

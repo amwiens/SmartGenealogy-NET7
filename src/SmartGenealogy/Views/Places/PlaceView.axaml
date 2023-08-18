@@ -20,8 +20,8 @@
           ColumnDefinitions="*,*">
       <mapsui:MapControl Grid.Column="1"
                          x:Name="MapControl"
-                         VerticalAlignment="Stretch"
-                         HorizontalAlignment="Stretch" />
+                         Width="500"
+                         Height="500" />
     </Grid>
   </StackPanel>
 </UserControl>
