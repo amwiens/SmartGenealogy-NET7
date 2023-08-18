@@ -72,7 +72,7 @@
                 </StackPanel>
               </Panel>
 
-              <StackPanel Grid.Column="1"
+              <!--<StackPanel Grid.Column="1"
                           HorizontalAlignment="Right"
                           Orientation="Horizontal"
                           VerticalAlignment="Bottom"
@@ -94,7 +94,7 @@
                                Margin="28 4 0 4" />
                   </Panel>
                 </Button>
-              </StackPanel>
+              </StackPanel>-->
 
             </Grid>
           </Panel>
