@@ -11,7 +11,7 @@ namespace SmartGenealogy.Services;
 /// <summary>
 /// Place repository
 /// </summary>
-public class PlaceRepository : IDataRepository<Place>
+public class PlaceRepository : IPlaceRepository
 {
     private readonly SmartGenealogyContext _context;
 
@@ -22,13 +22,18 @@ public class PlaceRepository : IDataRepository<Place>
 
     public IEnumerable<Place> GetAll()
     {
-        return _context.Places.ToList();
+        return _context.Places.Where(x => x.MasterId == 0).ToList();
     }
 
     public Place Get(long id)
     {
         return _context.Places
             .FirstOrDefault(p => p.Id == id)!;
+    }
+
+    public IEnumerable<Place> GetPlaceDetails(long masterId)
+    {
+        return _context.Places.Where(x => x.MasterId == masterId).ToList();
     }
 
     public Place Add(Place entity)

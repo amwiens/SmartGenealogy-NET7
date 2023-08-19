@@ -66,6 +66,9 @@
     <Compile Update="Views\File\MainFileView.axaml.cs">
       <DependentUpon>MainFileView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Places\AddPlaceDetailsContentDialogView.axaml.cs">
+      <DependentUpon>AddPlaceDetailsContentDialogView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Places\AddPlaceContentDialogView.axaml.cs">
       <DependentUpon>AddPlaceContentDialogView.axaml</DependentUpon>
     </Compile>

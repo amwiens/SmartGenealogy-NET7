@@ -48,7 +48,7 @@ public partial class PlacesViewModel : ViewModelBase
     public PlacesViewModel(ILogger? logger,
         ISettingService? settingService,
         IMessageBoxService? messageBoxService,
-        IDataRepository<Place>? placeRepository)
+        IPlaceRepository? placeRepository)
     {
         _logger = logger;
         _settingService = settingService;

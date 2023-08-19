@@ -82,7 +82,7 @@ public partial class App : Application
                 .AddSingleton<Func<Type, ViewModelBase>>(serviceProvider =>
                     viewModelType => (ViewModelBase)serviceProvider.GetRequiredService(viewModelType))
                 // Repositories
-                .AddScoped<IDataRepository<Place>, PlaceRepository>()
+                .AddScoped<IPlaceRepository, PlaceRepository>()
                 // ViewModels
                 .AddTransient<MainViewModel>()
                 .AddTransient<HomeViewModel>()

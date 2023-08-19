@@ -11,17 +11,67 @@
              xmlns:mapsui="clr-namespace:Mapsui.UI.Avalonia;assembly=Mapsui.UI.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:CompileBindings="True" x:DataType="vm:PlaceViewModel">
-  <StackPanel Spacing="8">
-    <TextBlock Text="{Binding Place.Name}"
+  <Grid RowDefinitions="Auto, *">
+    <TextBlock Grid.Row="0" Text="{Binding Place.Name}"
                Theme="{StaticResource TitleTextBlockStyle}"
                FontSize="32" />
 
-    <Grid RowDefinitions="*,*"
+    <Grid Grid.Row="1"
+          RowDefinitions="*,*"
           ColumnDefinitions="*,*">
-      <mapsui:MapControl Grid.Column="1"
-                         x:Name="MapControl"
-                         Width="500"
-                         Height="500" />
+
+      <Grid Grid.Column="1"
+            RowDefinitions="Auto, *">
+        <Grid ColumnDefinitions="*, Auto"
+              Grid.Row="0">
+          <TextBlock Grid.Column="0"
+                     Text="Place Details"
+                     Theme="{StaticResource TitleTextBlockStyle}" />
+          <StackPanel Grid.Column="1"
+                      Orientation="Horizontal"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Bottom">
+            <Button Theme="{StaticResource TransparentButton}"
+                    Margin="4"
+                    Command="{Binding AddPlaceDetailsCommand}"
+                    ToolTip.Tip="Add a place">
+              <ui:SymbolIcon Symbol="Add" FontSize="18" />
+            </Button>
+            <Button Theme="{StaticResource TransparentButton}"
+                    Margin="4"
+                    Command="{Binding DeletePlaceDetailsCommand}"
+                    ToolTip.Tip="Delete a place">
+              <ui:SymbolIcon Symbol="Delete" FontSize="18" />
+            </Button>
+          </StackPanel>
+        </Grid>
+
+        <DataGrid AutoGenerateColumns="False"
+                  ItemsSource="{Binding PlaceDetails, Mode=OneWay}"
+                  SelectedItem="{Binding SelectedPlaceDetail}"
+                  SelectionMode="Single"
+                  Grid.Row="1"
+                  IsReadOnly="True">
+          <Interaction.Behaviors>
+            <EventTriggerBehavior EventName="DoubleTapped">
+              <InvokeCommandAction Command="{Binding GoToPlaceDetailsCommand}" />
+            </EventTriggerBehavior>
+          </Interaction.Behaviors>
+
+          <DataGrid.Columns>
+            <DataGridTextColumn Header="Name" Width="*" Binding="{Binding Name}" />
+            <DataGridTextColumn Header="Latitude" Binding="{Binding Latitude}" />
+            <DataGridTextColumn Header="Longitude" Binding="{Binding Longitude}" />
+          </DataGrid.Columns>
+        </DataGrid>
+      </Grid>
+
+      <mapsui:MapControl x:Name="MapControl"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch"
+                         Grid.Row="1"
+                         Grid.Column="0" />
+
     </Grid>
-  </StackPanel>
+  </Grid>
 </UserControl>
